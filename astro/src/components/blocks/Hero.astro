@@ -1,0 +1,47 @@
+---
+import AvegaTitle from "@components/shared/AvegaTitle.astro";
+import Button from "@components/shared/Button.astro";
+
+import { Image } from "astro:assets";
+
+interface Props {
+	title: string;
+	description: string;
+	backgroundImage: {
+		url: string;
+		alternativeText: string;
+	};
+	button: {
+		title: string;
+		url: string;
+		target: "_blank" | "_self" | "_parent" | "_top";
+	};
+}
+const strapiUrl = import.meta.env.STRAPI_URL;
+
+const { title, description, backgroundImage, button } = Astro.props;
+
+const imageUrl = strapiUrl + backgroundImage.url;
+---
+<section class="h-screen overflow-hidden relative flex flex-col items-center justify-center">
+   <Image src={imageUrl}
+      alt=""
+      class="absolute inset-0 w-full h-full object-cover z-0"
+      width="1920"
+      height="1080"
+      loading="eager"
+   />
+   <div class="flex flex-col items-start justify-center h-full w-full z-10 px-8 md:px-36 mt-12">
+      <AvegaTitle title={title} />
+      <h2 class="text-slate-100 text-start mt-2 md:mt-6 text-md md:text-md text-muted max-w-3xl relative z-10">
+         {description}
+      </h2>
+      {button && (<div class="mt-18">
+         <Button 
+            text={button.title}
+            target={button.target}
+            url={button.url}
+         />
+      </div>)}
+   </div>
+</section>

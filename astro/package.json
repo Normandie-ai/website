@@ -1,0 +1,29 @@
+{
+  "name": "astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "biome lint --write .",
+    "lint:fix": "biome check --write ."
+  },
+  "dependencies": {
+    "@sentry/astro": "^9.3.0",
+    "@spotlightjs/astro": "^3.0.1",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.0.9",
+    "astro": "^5.4.2",
+    "date-fns": "^4.1.0",
+    "lefthook": "^1.11.10",
+    "marked": "^15.0.7",
+    "qs": "^6.11.1",
+    "tailwindcss": "^4.0.9"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/qs": "^6.9.18"
+  }
+}

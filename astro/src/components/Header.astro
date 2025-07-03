@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+import fetchApi from "@lib/strapi";
+
+interface NavbarItem {
+	title: string;
+	url: string;
+	target?: string;
+}
+
+interface Navigation {
+	Logo: {
+		url: string;
+		alternativeText: string;
+	};
+	Right_Navbar_Items: NavbarItem[];
+	Left_Navbar_Items: NavbarItem[];
+}
+const strapiUrl = import.meta.env.STRAPI_URL;
+
+const { Logo, Right_Navbar_Items, Left_Navbar_Items }: Navigation =
+	await fetchApi({
+		endpoint: "/navigation?populate=*",
+		wrappedByKey: "data",
+	});
+
+const imageUrl = strapiUrl + Logo.url;
+---
+
+<header class="fixed text-slate-100 body-font z-20 w-full">
+   <div class="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center px-18 py-12">
+     <a href="/" class="flex title-font font-medium items-center mb-4 md:mb-0">
+      <Image src={imageUrl}
+          alt={Logo.alternativeText}
+          width="204"
+          height="102"
+          loading="eager"
+      />
+     </a>
+     <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 flex flex-wrap items-center text-sm justify-center">
+        {Right_Navbar_Items.map((item: NavbarItem) => {
+          return (<a
+            href={item.url}
+            class="mr-5 hover:text-gray-600"
+            target={item.target ? item.target : '_self'}
+          >
+            {item.title}
+          </a>)
+        })}
+     </nav>
+     <div class="flex space-x-2 items-center">
+      {Left_Navbar_Items.map((item: NavbarItem) => {
+        return (
+          <a
+            href={item.url}
+            target={item.target ? item.target : '_self'}
+            class="inline-flex items-center bg-violet-300 text-slate-600 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+            {item.title}
+          </a>
+        );
+      })}
+    </div>
+   </div>
+ </header>

@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import Card from "../shared/Card.astro";
+import gradientOverlay from "@assets/gradient-nai-2025.png";
+
+interface CardData {
+	title: string;
+	subtitle?: string;
+	description: string;
+	icon?: string;
+}
+
+interface Props {
+	cards: CardData[];
+	backgroundImage?: {
+		url: string;
+		alternativeText: string;
+	};
+}
+
+const strapiUrl = import.meta.env.STRAPI_URL;
+
+const { cards, backgroundImage } = Astro.props;
+
+const imageUrl = backgroundImage ? strapiUrl + backgroundImage.url : null;
+---
+
+<section class="relative py-20 px-24 mx-auto overflow-hidden">
+	<!-- Background Image -->
+	{imageUrl && (
+		<Image 
+			src={imageUrl}
+			alt={backgroundImage?.alternativeText || "Background"}
+			class="absolute inset-0 w-full h-full object-cover -z-10"
+			width="1920"
+			height="1080"
+			loading="lazy"
+		/>
+	)}
+	
+	<!-- Gradient overlay -->
+	<Image 
+		src={gradientOverlay}
+		alt=""
+		class="absolute inset-0 w-full h-full object-cover z-5 opacity-70"
+		width="1920"
+		height="1080"
+		loading="lazy"
+	/>
+	
+	<div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+		{cards && cards.map((card) => (
+			<Card
+				title={card.title}
+				subtitle={card.subtitle}
+				description={card.description}
+				icon={card.icon}
+			/>
+		))}
+	</div>
+</section>

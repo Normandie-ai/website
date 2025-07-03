@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "navigations",
+  "info": {
+    "singularName": "navigation",
+    "pluralName": "navigations",
+    "displayName": "Navigation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Left_Navbar_Items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.link"
+    },
+    "Right_Navbar_Items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.link"
+    },
+    "Logo": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

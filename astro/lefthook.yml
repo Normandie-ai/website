@@ -1,0 +1,10 @@
+#
+#   Refer for explanation to following link:
+#   https://lefthook.dev/configuration/
+#
+
+pre-commit:
+  commands:
+    check:
+      glob: "*.{js,vue,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: npx biome check --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}

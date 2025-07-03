@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_features",
+  "info": {
+    "displayName": "Features",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "titleImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "variant": {
+      "type": "string",
+      "enum": ["default", "dark"],
+      "default": "default"
+    }
+  }
+}

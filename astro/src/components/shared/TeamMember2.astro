@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+	firstName: string;
+	lastName: string;
+	avatar: {
+		url: string;
+		alternativeText: string;
+	};
+}
+const strapiUrl = import.meta.env.STRAPI_URL;
+
+const { firstName, lastName, avatar } = Astro.props;
+const avatarUrl = avatar ? strapiUrl + avatar.url : null;
+---
+
+<div class="p-2 lg:w-1/4 md:w-1/2 max-h-92">
+    <div class="group relative h-full flex flex-col items-center border-white border-2 w-full rounded-xl bg-radial/hsl from-violet-300 to-purple-900 shadow-purple-100 shadow-xl overflow-hidden cursor-pointer">
+        <div class="absolute h-full w-full inset-0 bg-radial/hsl from-transparent to-purple-950 bg-opacity-10 group z-10"></div>
+        <div class="absolute group w-full">
+            <div class="relative h-36 overflow-hidden w-full text-white rounded-t-xl group">
+                <div class="w-full overflow-hidden avega leading-8 [--offset:0.5vw] [--move-initial:calc(-25%_+_var(--offset))] [--move-final:calc(-50%_+_var(--offset))] group">
+                    {[...Array(4)].map((_, i) => (
+                        <div 
+                            class={`w-fit flex relative transform-[translate3d(var(--move-initial),0,0)] animate-marquee ${
+                                i % 2 === 1 ? "[animation-direction:reverse]" : ""
+                            } [animation-play-state:paused] group-hover:[animation-play-state:running] ${i % 2 === 1 ? "ml-50" : ""}`} 
+                            aria-hidden="true"
+                        >
+                            {[...Array(4)].map((_, i) => (
+                                <span class="text-3xl px-2">{firstName}</span>
+                                <span class="text-3xl pr-2"><em>{lastName}</em></span>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+        {avatarUrl && (
+            <Image
+                src={avatarUrl}
+                alt={avatar?.alternativeText ?? "team member"}
+                width="1920"
+                height="1080"
+                class="relative w-full object-cover rounded-b-xl z-10 pt-20"
+            />
+        )}
+        <div class="absolute w-full flex flex-col items-center justify-center text-center pt-16 z-20 bottom-0 bg-linear-to-t/hsl from-blue-950 to-transparent">
+        </div>
+    </div>
+</div>
+

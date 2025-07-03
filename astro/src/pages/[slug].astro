@@ -1,0 +1,40 @@
+---
+import BlockManager from "@components/blocks/BlockManager.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import fetchApi from "@lib/strapi";
+import qs from "qs";
+
+export async function getStaticPaths() {
+	const query = qs.stringify(
+		{
+			populate: {
+				blocks: {
+					populate: "*",
+				},
+			},
+		},
+		{
+			encodeValuesOnly: true,
+		},
+	);
+
+	const pages = await fetchApi({
+		endpoint: `pages?${query}`,
+		wrappedByKey: "data",
+	});
+
+	return Array.isArray(pages)
+		? pages.map((page) => ({
+				params: {
+					slug: page.slug,
+				},
+				props: page,
+			}))
+		: [];
+}
+
+const { blocks } = Astro.props;
+---
+<PageLayout>
+  <BlockManager blocks={blocks} />
+</PageLayout>

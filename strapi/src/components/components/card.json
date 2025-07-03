@@ -1,0 +1,22 @@
+{
+    "collectionName": "components_components_cards",
+    "info": {
+        "displayName": "Card",
+        "icon": "grid"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "subtitle": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "icon": {
+            "type": "string"
+        }
+    }
+}

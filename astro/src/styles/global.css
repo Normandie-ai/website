@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@font-face {
+    font-family: 'Avega Italic';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/Avega-Italic.woff');
+}
+
+body {
+    font-family: 'Maax', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    src: url('../assets/fonts/Maax.woff');
+}
+
+@theme {
+    --animate-marquee: marquee 5s linear infinite;
+    @keyframes marquee {
+		0% { transform: translate3d(var(--move-initial), 0, 0) }
+        100% { transform: translate3d(var(--move-final), 0, 0) }
+    }
+  }
+.avega {
+    font-family: 'Avega Italic', sans-serif;
+
+    em {
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: 1px;
+    }
+}

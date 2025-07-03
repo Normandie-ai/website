@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+---
+
+<BaseLayout>
+  <div class="page">
+    <slot name="header">
+      <Header />
+    </slot>
+    <section class="content">
+      <main>
+        <slot />
+      </main>
+    </section>
+    <slot name="footer">
+      <!-- <Footer /> -->
+    </slot>
+  </div>
+</BaseLayout>

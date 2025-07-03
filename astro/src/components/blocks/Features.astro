@@ -1,0 +1,225 @@
+---
+import { Image } from "astro:assets";
+import { marked } from "marked";
+
+interface Props {
+	title: string;
+  titleImage: {
+		url: string;
+		alternativeText: string;
+	};
+  content: string;
+  images: {
+    url: string;
+    alternativeText: string;
+  }[];
+  variant: "default" | "dark";
+}
+const strapiUrl = import.meta.env.STRAPI_URL;
+
+const { title, titleImage, content, images = [], variant } = Astro.props;
+
+const imageUrl = titleImage ? strapiUrl + titleImage.url : null;
+
+// Configure marked to properly handle markdown
+marked.setOptions({
+  breaks: true,
+  gfm: true // GitHub Flavored Markdown
+});
+
+const parsedContent = marked.parse(content);
+
+// Determine grid layout based on number of images
+const imageCount = images?.length || 0;
+const getImageGridClass = (count: number) => {
+  switch (count) {
+    case 1:
+      return "grid-cols-1 max-w-md mx-auto";
+    case 2:
+      return "grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto";
+    case 3:
+      return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto";
+    case 4:
+      return "grid-cols-2 gap-4";
+    default:
+      return "grid-cols-1 md:grid-cols-2";
+  }
+};
+
+// Determine container layout based on whether we have images
+const hasImages = images?.length > 0;
+const containerClass = hasImages 
+  ? "grid grid-cols-1 lg:grid-cols-2 gap-12 items-start"
+  : "flex justify-center";
+
+// Apply background color if provided
+const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
+---
+
+<style>
+  .blur-circle {
+    background: #4863B7;
+    opacity: 0.7;
+  }
+</style>
+
+<section style={sectionStyle} class="relative overflow-hidden">
+  <!-- Decorative blurred circles - only show for dark variant -->
+  {variant === "dark" && (
+    <>
+      <div class="absolute top-0 -left-20 w-[32rem] h-[32rem] rounded-full filter blur-3xl blur-circle"></div>
+      <div class="absolute bottom-0 right-2 w-[38rem] h-[38rem] rounded-full filter blur-3xl blur-circle"></div>
+    </>
+  )}
+  
+  <div class="mx-auto max-w-screen-xl px-4 py-48 sm:px-6 lg:px-8 relative z-10">
+    <div class={containerClass}>
+      <!-- Content Section -->
+      <div class="order-2 lg:order-1">
+        <div class="max-w-lg md:max-w-none">
+          {imageUrl && (
+            <Image src={imageUrl}
+                alt={titleImage.alternativeText || ""}
+                width="337"
+                height="70"
+                loading="eager"
+            />
+          )}
+          {title && <h2 class="text-2xl font-semibold sm:text-3xl" style={variant ? `color: white` : ''}>
+            {title}
+          </h2>
+          }
+
+          <div class="mt-4 prose prose-gray max-w-none" style={variant ? `color: white` : ''}>
+            <article set:html={parsedContent} />
+          </div>
+        </div>
+      </div>
+
+      <!-- Images Section -->
+      {hasImages && (
+        <div class="order-1 lg:order-2">
+          {imageCount === 4 ? (
+            <div class="grid grid-cols-3 gap-4 p-2">
+              {/* First image - spans 2 columns (wider) */}
+              <div class="relative rounded-2xl h-48 col-span-2">
+                <img
+                  src={strapiUrl + images[0].url}
+                  alt={images[0].alternativeText || "Image 1"}
+                  class="w-full h-full object-cover rounded-2xl"
+                />
+                {variant !== "dark" && (
+                  <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                )}
+              </div>
+              
+              {/* Second image - spans 1 column */}
+              <div class="relative rounded-2xl h-48 col-span-1">
+                <img
+                  src={strapiUrl + images[1].url}
+                  alt={images[1].alternativeText || "Image 2"}
+                  class="w-full h-full object-cover rounded-2xl"
+                />
+                {variant !== "dark" && (
+                  <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                )}
+              </div>
+              
+              {/* Third image - spans 1 column */}
+              <div class="relative rounded-2xl h-48 col-span-1">
+                <img
+                  src={strapiUrl + images[2].url}
+                  alt={images[2].alternativeText || "Image 3"}
+                  class="w-full h-full object-cover rounded-2xl"
+                />
+                {variant !== "dark" && (
+                  <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                )}
+              </div>
+              
+              {/* Fourth image - spans 2 columns (wider) */}
+              <div class="relative rounded-2xl h-48 col-span-2">
+                <img
+                  src={strapiUrl + images[3].url}
+                  alt={images[3].alternativeText || "Image 4"}
+                  class="w-full h-full object-cover rounded-2xl"
+                />
+                {variant !== "dark" && (
+                  <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                )}
+              </div>
+            </div>
+          ) : imageCount === 3 ? (
+            <div class="grid grid-cols-3 gap-4 p-2">
+              {/* First image - spans 2 columns (wider) */}
+              <div class="relative rounded-2xl h-48 col-span-2">
+                <img
+                  src={strapiUrl + images[0].url}
+                  alt={images[0].alternativeText || "Image 1"}
+                  class="w-full h-full object-cover rounded-2xl"
+                />
+                {variant !== "dark" && (
+                  <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                )}
+              </div>
+              
+              {/* Second image - spans 1 column */}
+              <div class="relative rounded-2xl h-48 col-span-1">
+                <img
+                  src={strapiUrl + images[1].url}
+                  alt={images[1].alternativeText || "Image 2"}
+                  class="w-full h-full object-cover rounded-2xl"
+                />
+                {variant !== "dark" && (
+                  <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                )}
+              </div>
+              
+              {/* Third image - spans full width (3 columns) */}
+              <div class="relative rounded-2xl h-48 col-span-3">
+                <img
+                  src={strapiUrl + images[2].url}
+                  alt={images[2].alternativeText || "Image 3"}
+                  class="w-full h-full object-cover rounded-2xl"
+                />
+                {variant !== "dark" && (
+                  <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                )}
+              </div>
+            </div>
+          ) : imageCount === 2 ? (
+            <div class={`grid ${getImageGridClass(imageCount)} gap-4 p-2`}>
+              {images.map((image, index) => (
+                <div class="relative rounded-2xl h-100">
+                  <img
+                    src={strapiUrl + image.url}
+                    alt={image.alternativeText || `Image ${index + 1}`}
+                    class="w-full h-full object-cover rounded-2xl"
+                  />
+                  {variant !== "dark" && (
+                    <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div class={`grid ${getImageGridClass(imageCount)} gap-4 p-2`}>
+              {images.map((image, index) => (
+                <div class="relative rounded-2xl h-100">
+                  <img
+                    src={strapiUrl + image.url}
+                    alt={image.alternativeText || `Image ${index + 1}`}
+                    class="w-full h-full object-cover rounded-2xl"
+                  />
+                  {variant !== "dark" && (
+                    <div class="absolute inset-0 border-2 border-[#5C89FA] rounded-2xl translate-x-2 translate-y-2 -z-10"></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</section>

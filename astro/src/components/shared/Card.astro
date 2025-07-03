@@ -1,0 +1,48 @@
+---
+interface Props {
+	title: string;
+	subtitle?: string;
+	description: string;
+	icon?: string;
+}
+
+const { title, subtitle, description, icon } = Astro.props;
+---
+
+<div class="relative p-8 rounded-2xl backdrop-blur-sm bg-white/10 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 group hover:scale-105">
+	<!-- Icon at the top if provided -->
+	{icon && (
+		<div class="relative mb-6 flex justify-center">
+			<div class="w-16 h-16 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20 flex items-center justify-center">
+				<svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+					{icon === "location" && (
+						<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM12 11.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+					)}
+					{icon === "calendar" && (
+						<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+					)}
+				</svg>
+			</div>
+		</div>
+	)}
+	
+	<!-- Title -->
+	<h3 class="relative text-2xl font-bold text-white mb-3 text-center group-hover:text-white/95 transition-colors">
+		{title}
+	</h3>
+	
+	<!-- Subtitle -->
+	{subtitle && (
+		<p class="relative text-white/80 font-medium mb-4 text-center text-sm">
+			{subtitle}
+		</p>
+	)}
+	
+	<!-- Description -->
+	<p class="relative text-white/90 leading-relaxed text-center text-sm max-w-md mx-auto">
+		{description}
+	</p>
+	
+	<!-- Hover glow effect -->
+	<div class="absolute inset-0 rounded-2xl bg-white/5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"></div>
+</div> 

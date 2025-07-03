@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_blocks_cards",
+    "info": {
+        "displayName": "Cards",
+        "icon": "grid"
+    },
+    "options": {},
+    "attributes": {
+        "cards": {
+            "type": "component",
+            "repeatable": true,
+            "component": "components.card"
+        },
+        "backgroundImage": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": ["images"]
+        }
+    }
+}

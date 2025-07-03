@@ -1,0 +1,21 @@
+---
+import "@styles/global.css";
+
+const { meta = {} } = Astro.props;
+const language = 'en';
+---
+
+<!DOCTYPE html>
+<html lang={language} dir={'ltr'}>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <meta name="keywords" content={meta.keywords} />
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>

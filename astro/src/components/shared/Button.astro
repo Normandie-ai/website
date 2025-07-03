@@ -1,0 +1,16 @@
+---
+interface Props {
+	text: string;
+	url: string;
+	target: "_blank" | "_self" | "_parent" | "_top";
+}
+
+const { text, url, target } = Astro.props;
+---
+
+ <a href={url} target={target ?? '_self'} class="relative px-8 py-2.5 font-semibold text-white group">
+    <span class="absolute rounded-sm inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0"
+            style="background-color: rgba(255, 255, 255, 0.10);"></span>
+    <span class="absolute inset-0 w-full h-full border-1 rounded-sm border-white"></span>
+    <span class="relative">{text}</span>
+</a>
