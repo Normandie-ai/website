@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import Card from "../shared/Card.astro";
-import gradientOverlay from "@assets/gradient-nai-2025.png";
+import gradientOverlayBlue from "@assets/gradient-blue.png";
+import gradientOverlayPurple from "@assets/gradient-purple.png";
 import { getImageUrl } from "@lib/imageUtils";
 
 interface CardData {
@@ -17,13 +18,15 @@ interface Props {
 		url: string;
 		alternativeText: string;
 	};
+	variant: "blue" | "purple";
 }
 
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { cards, backgroundImage } = Astro.props;
+const { cards, backgroundImage, variant } = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
+const gradientOverlay = variant === "blue" ? gradientOverlayBlue : gradientOverlayPurple;
 ---
 
 <section class="relative py-20 px-24 mx-auto overflow-hidden">
@@ -32,7 +35,7 @@ const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 		<Image 
 			src={imageUrl}
 			alt={backgroundImage?.alternativeText || "Background"}
-			class="absolute inset-0 w-full h-full object-cover -z-10"
+			class="absolute inset-0 w-full h-full object-cover -z-10 opacity-50"
 			width="1920"
 			height="1080"
 			loading="lazy"
@@ -43,7 +46,7 @@ const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 	<Image 
 		src={gradientOverlay}
 		alt=""
-		class="absolute inset-0 w-full h-full object-cover z-5 opacity-70"
+		class="absolute inset-0 w-full h-full object-cover z-5 mix-blend-screen"
 		width="1920"
 		height="1080"
 		loading="lazy"

@@ -1,0 +1,65 @@
+---
+interface Props {
+  targetDate: string;
+  className?: string;
+}
+
+const { targetDate, className = "" } = Astro.props;
+
+const target = new Date(targetDate);
+const today = new Date();
+const timeDiff = target.getTime() - today.getTime();
+const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+---
+
+<div class={`ml-4 px-10 py-2 bg-white/10 backdrop-blur-md rounded-lg border-1 border-white shadow-lg relative overflow-hidden ${className}`}>
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <span id="day-counter-bg" class="text-white/10 avega text-7xl font-bold select-none">
+      {daysDiff}
+    </span>
+  </div>
+  
+  <div class="flex items-center space-x-2 relative z-10">
+    <span id="day-counter" class="text-white font-bold text-lg tracking-wider" data-target-date={targetDate}>
+      J-{daysDiff}
+    </span>
+  </div>
+</div>
+
+<script>
+  function updateDayCounter() {
+    const counterElement = document.getElementById('day-counter');
+    const counterBgElement = document.getElementById('day-counter-bg');
+    if (!counterElement || !counterBgElement) return;
+    
+    const targetDate = new Date(counterElement.getAttribute('data-target-date') || '2025-12-11');
+    const today = new Date();
+    
+    const timeDiff = targetDate.getTime() - today.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    
+    if (daysDiff > 0) {
+      counterElement.textContent = `J-${daysDiff}`;
+      counterBgElement.textContent = daysDiff.toString();
+    } else if (daysDiff === 0) {
+      counterElement.textContent = 'J-JOUR';
+      counterBgElement.textContent = '0';
+    } else {
+      counterElement.textContent = `J+${Math.abs(daysDiff)}`;
+      counterBgElement.textContent = Math.abs(daysDiff).toString();
+    }
+  }
+  
+  updateDayCounter();
+  
+  setInterval(updateDayCounter, 3600000);
+  
+  const now = new Date();
+  const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const msUntilMidnight = tomorrow.getTime() - now.getTime();
+  
+  setTimeout(() => {
+    updateDayCounter();
+    setInterval(updateDayCounter, 86400000);
+  }, msUntilMidnight);
+</script> 

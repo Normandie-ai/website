@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import fetchApi from "@lib/strapi";
 import { getImageUrl, getLinkUrl } from "@lib/imageUtils";
+import DayCounter from "@components/shared/DayCounter.astro";
 
 interface NavbarItem {
 	title: string;
@@ -37,10 +38,12 @@ const Right_Navbar_Items = navigationData?.Right_Navbar_Items || [];
 const Left_Navbar_Items = navigationData?.Left_Navbar_Items || [];
 
 const imageUrl = getImageUrl(Logo?.url, strapiUrl);
+
+
 ---
 
 <header class="fixed text-slate-100 body-font z-20 w-full">
-   <div class="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center px-18 py-12">
+   <div class="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center px-8 md:px-36 py-12">
      <a href={baseUrl} class="flex title-font font-medium items-center mb-4 md:mb-0">
       {Logo && imageUrl ? (
         <Image src={imageUrl}
@@ -60,7 +63,7 @@ const imageUrl = getImageUrl(Logo?.url, strapiUrl);
           const href = getLinkUrl(item.url, baseUrl);
           return (<a
             href={href}
-            class="mr-5 hover:text-gray-600"
+            class="mr-5"
             target={item.target ? item.target : '_self'}
           >
             {item.title}
@@ -79,6 +82,8 @@ const imageUrl = getImageUrl(Logo?.url, strapiUrl);
           </a>
         );
       })}
+      
+      <DayCounter targetDate="2025-12-11" />
     </div>
    </div>
  </header>

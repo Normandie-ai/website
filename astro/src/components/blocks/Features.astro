@@ -91,7 +91,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
           </h2>
           }
 
-          <div class="mt-4 prose prose-gray max-w-none" style={variant === "dark" ? `color: white` : ''}>
+          <div class=`mt-4 prose prose-strong:font-bold max-w-none ${variant === 'dark' ? 'prose-invert' : ''}` style={variant === "dark" ? `color: white` : ''}>
             <article set:html={parsedContent} />
           </div>
         </div>

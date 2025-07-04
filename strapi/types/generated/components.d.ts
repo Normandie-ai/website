@@ -40,7 +40,7 @@ export interface BlocksHero extends Struct.ComponentSchema {
       'images' | 'files' | 'videos' | 'audios'
     >;
     button: Schema.Attribute.Component<'components.link', false>;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.RichText;
     title: Schema.Attribute.String;
   };
 }

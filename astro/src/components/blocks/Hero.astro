@@ -2,6 +2,7 @@
 import AvegaTitle from "@components/shared/AvegaTitle.astro";
 import Button from "@components/shared/Button.astro";
 import { getImageUrl } from "@lib/imageUtils";
+import { marked } from "marked";
 
 import { Image } from "astro:assets";
 
@@ -23,6 +24,13 @@ const strapiUrl = import.meta.env.STRAPI_URL;
 const { title, description, backgroundImage, button } = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage.url, strapiUrl);
+// Configure marked to properly handle markdown
+marked.setOptions({
+  breaks: true,
+  gfm: true // GitHub Flavored Markdown
+});
+
+const parsedContent = description ? marked.parse(description) : null;
 ---
 <section class="h-screen overflow-hidden relative flex flex-col items-center justify-center">
    {imageUrl && (
@@ -34,11 +42,11 @@ const imageUrl = getImageUrl(backgroundImage.url, strapiUrl);
         loading="eager"
      />
    )}
-   <div class="flex flex-col items-start justify-center h-full w-full z-10 px-8 md:px-36 mt-12">
+   <div class="flex flex-col items-start justify-center h-full w-full z-10 px-8 md:px-36">
       <AvegaTitle title={title} />
-      <h2 class="text-slate-100 text-start mt-2 md:mt-6 text-md md:text-md text-muted max-w-3xl relative z-10">
-         {description}
-      </h2>
+      <div class="text-white text-start mt-2 md:mt-6 text-md md:text-md max-w-3xl relative z-10">
+         <article set:html={parsedContent} />
+       </div>
       {button && (<div class="mt-18">
          <Button 
             text={button.title}

@@ -7,6 +7,14 @@
 }
 
 @font-face {
+  font-family: 'Maax';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../assets/fonts/Maax-Bold.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Avega Italic';
   font-style: normal;
   font-weight: 400;
