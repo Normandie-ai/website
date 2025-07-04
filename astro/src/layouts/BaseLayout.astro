@@ -1,6 +1,6 @@
 ---
 import "@styles/global.css";
-import FontLoader from "@components/FontLoader.astro";
+import "@styles/fonts.css";
 
 const { meta = {} } = Astro.props;
 const language = 'en';
@@ -14,7 +14,6 @@ const language = 'en';
     <title>{meta.title}</title>
     <meta name="description" content={meta.description} />
     <meta name="keywords" content={meta.keywords} />
-    <FontLoader />
   </head>
 
   <body>
