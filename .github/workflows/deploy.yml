@@ -1,0 +1,71 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to deploy"
+        required: true
+        default: "main"
+
+  repository_dispatch:
+    types: [strapi-content-update]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: astro/yarn.lock
+      
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+        with:
+          static_site_generator: astro
+      
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: ./astro
+      
+      - name: Build site
+        run: yarn build
+        working-directory: ./astro
+        env:
+          STRAPI_URL: ${{ secrets.STRAPI_URL }}
+          # Add any other environment variables you need
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./astro/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 
