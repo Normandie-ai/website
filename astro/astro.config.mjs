@@ -7,10 +7,34 @@ import tailwindcss from '@tailwindcss/vite';
 import sentry from '@sentry/astro';
 import spotlightjs from '@spotlightjs/astro';
 
-export default defineConfig({
-  site: 'https://normandie-ai.github.io/website',
-  base: '/',
+// Flexible base configuration
+// For GitHub Pages: set ASTRO_BASE to your repository name
+// For root hosting: set ASTRO_BASE to empty string or don't set it
+const getBaseUrl = () => {
+  // Check if we're building for GitHub Pages
+  const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
   
+  // Allow explicit override via environment variable
+  if (process.env.ASTRO_BASE !== undefined) {
+    return process.env.ASTRO_BASE;
+  }
+  
+  // Default behavior for GitHub Pages
+  if (isGitHubPages) {
+    // Extract repository name from GITHUB_REPOSITORY (format: owner/repo)
+    const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1];
+    return repoName || 'website';
+  }
+  
+  // For local development and other hosting, use root
+  return '';
+};
+
+const baseUrl = getBaseUrl();
+
+export default defineConfig({
+  site: 'https://normandie-ai.github.io',
+  base: baseUrl,
   vite: {
     plugins: [tailwindcss()],
     resolve: {
@@ -24,6 +48,5 @@ export default defineConfig({
       }
     }
   },
-
   integrations: [sentry(), spotlightjs()]
 });
