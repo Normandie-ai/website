@@ -1,0 +1,36 @@
+---
+import BlockManager from "@components/blocks/BlockManager.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import fetchApi from "@lib/strapi";
+import qs from "qs";
+
+// Fetch the home page from Strapi
+const query = qs.stringify(
+	{
+		filters: {
+			slug: {
+				$eq: "home",
+			},
+		},
+		populate: {
+			blocks: {
+				populate: "*",
+			},
+		},
+	},
+	{
+		encodeValuesOnly: true,
+	},
+);
+
+const pages = await fetchApi({
+	endpoint: `pages?${query}`,
+	wrappedByKey: "data",
+});
+
+const homePage = Array.isArray(pages) && pages.length > 0 ? pages[0] : null;
+const blocks = homePage?.blocks || [];
+---
+<PageLayout>
+    <BlockManager blocks={blocks} />
+</PageLayout>

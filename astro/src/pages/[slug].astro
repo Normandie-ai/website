@@ -24,7 +24,9 @@ export async function getStaticPaths() {
 	});
 
 	return Array.isArray(pages)
-		? pages.map((page) => ({
+		? pages
+			.filter((page) => page.slug !== "home") // Exclude home page (handled by index.astro)
+			.map((page) => ({
 				params: {
 					slug: page.slug,
 				},
