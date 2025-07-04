@@ -9,6 +9,7 @@ export interface BlocksCards extends Struct.ComponentSchema {
   attributes: {
     backgroundImage: Schema.Attribute.Media<'images'>;
     cards: Schema.Attribute.Component<'components.card', true>;
+    variant: Schema.Attribute.Enumeration<['blue', 'purple']>;
   };
 }
 

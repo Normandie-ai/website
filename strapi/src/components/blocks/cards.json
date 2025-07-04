@@ -16,6 +16,10 @@
             "multiple": false,
             "required": false,
             "allowedTypes": ["images"]
+        },
+        "variant": {
+            "type": "enumeration",
+            "enum": ["blue", "purple"]
         }
     }
 }
