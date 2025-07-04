@@ -8,8 +8,8 @@ import sentry from '@sentry/astro';
 import spotlightjs from '@spotlightjs/astro';
 
 export default defineConfig({
-  site: 'https://Normandie-ai.github.io',
-  base: '/website',
+  site: 'https://normandie-ai.github.io/website',
+  base: '/',
   
   vite: {
     plugins: [tailwindcss()],

@@ -27,7 +27,7 @@ marked.setOptions({
   gfm: true // GitHub Flavored Markdown
 });
 
-const parsedContent = marked.parse(content);
+const parsedContent = content ? marked.parse(content) : null;
 
 // Determine grid layout based on number of images
 const imageCount = images?.length || 0;
