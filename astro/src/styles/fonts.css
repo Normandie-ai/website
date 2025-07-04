@@ -2,7 +2,7 @@
   font-family: 'Maax';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/Maax.woff') format('woff');
+  src: url('../assets/fonts/Maax.woff') format('woff');
   font-display: swap;
 }
 
@@ -10,7 +10,7 @@
   font-family: 'Avega Italic';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/Avega-Italic.woff') format('woff');
+  src: url('../assets/fonts/Avega-Italic.woff') format('woff');
   font-display: swap;
 }
 
