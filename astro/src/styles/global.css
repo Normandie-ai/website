@@ -1,18 +1,10 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@font-face {
-    font-family: 'Avega Italic';
-    font-style: normal;
-    font-weight: 400;
-    src: url('../assets/fonts/Avega-Italic.woff');
-}
-
 body {
     font-family: 'Maax', sans-serif;
     font-size: 16px;
     font-weight: 400;
-    src: url('../assets/fonts/Maax.woff');
 }
 
 @theme {

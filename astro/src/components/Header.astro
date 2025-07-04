@@ -17,6 +17,7 @@ interface Navigation {
 	Left_Navbar_Items?: NavbarItem[];
 }
 const strapiUrl = import.meta.env.STRAPI_URL;
+const baseUrl = import.meta.env.BASE_URL;
 
 // Fetch navigation data with error handling
 let navigationData: Navigation | null = null;
@@ -39,7 +40,7 @@ const imageUrl = Logo ? strapiUrl + Logo.url : null;
 
 <header class="fixed text-slate-100 body-font z-20 w-full">
    <div class="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center px-18 py-12">
-     <a href="/" class="flex title-font font-medium items-center mb-4 md:mb-0">
+     <a href={baseUrl} class="flex title-font font-medium items-center mb-4 md:mb-0">
       {Logo && imageUrl ? (
         <Image src={imageUrl}
             alt={Logo.alternativeText || "Logo"}
@@ -55,8 +56,9 @@ const imageUrl = Logo ? strapiUrl + Logo.url : null;
      </a>
      <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 flex flex-wrap items-center text-sm justify-center">
         {Right_Navbar_Items?.map((item: NavbarItem) => {
+          const href = item.url.startsWith('/') ? `${baseUrl}${item.url.slice(1)}` : item.url;
           return (<a
-            href={item.url}
+            href={href}
             class="mr-5 hover:text-gray-600"
             target={item.target ? item.target : '_self'}
           >
@@ -66,9 +68,10 @@ const imageUrl = Logo ? strapiUrl + Logo.url : null;
      </nav>
      <div class="flex space-x-2 items-center">
       {Left_Navbar_Items?.map((item: NavbarItem) => {
+        const href = item.url.startsWith('/') ? `${baseUrl}${item.url.slice(1)}` : item.url;
         return (
           <a
-            href={item.url}
+            href={href}
             target={item.target ? item.target : '_self'}
             class="inline-flex items-center bg-violet-300 text-slate-600 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
             {item.title}
