@@ -9,7 +9,7 @@ import spotlightjs from '@spotlightjs/astro';
 
 export default defineConfig({
   site: 'https://Normandie-ai.github.io',
-  base: '/',
+  base: '/website',
   
   vite: {
     plugins: [tailwindcss()],
