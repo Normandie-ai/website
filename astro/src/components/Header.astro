@@ -9,36 +9,52 @@ interface NavbarItem {
 }
 
 interface Navigation {
-	Logo: {
+	Logo?: {
 		url: string;
 		alternativeText: string;
 	};
-	Right_Navbar_Items: NavbarItem[];
-	Left_Navbar_Items: NavbarItem[];
+	Right_Navbar_Items?: NavbarItem[];
+	Left_Navbar_Items?: NavbarItem[];
 }
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { Logo, Right_Navbar_Items, Left_Navbar_Items }: Navigation =
-	await fetchApi({
+// Fetch navigation data with error handling
+let navigationData: Navigation | null = null;
+try {
+	navigationData = await fetchApi({
 		endpoint: "/navigation?populate=*",
 		wrappedByKey: "data",
 	});
+} catch (error) {
+	console.warn("Failed to fetch navigation data:", error);
+}
 
-const imageUrl = strapiUrl + Logo.url;
+// Destructure with fallback values
+const Logo = navigationData?.Logo || null;
+const Right_Navbar_Items = navigationData?.Right_Navbar_Items || [];
+const Left_Navbar_Items = navigationData?.Left_Navbar_Items || [];
+
+const imageUrl = Logo ? strapiUrl + Logo.url : null;
 ---
 
 <header class="fixed text-slate-100 body-font z-20 w-full">
    <div class="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center px-18 py-12">
      <a href="/" class="flex title-font font-medium items-center mb-4 md:mb-0">
-      <Image src={imageUrl}
-          alt={Logo.alternativeText}
-          width="204"
-          height="102"
-          loading="eager"
-      />
+      {Logo && imageUrl ? (
+        <Image src={imageUrl}
+            alt={Logo.alternativeText || "Logo"}
+            width="204"
+            height="102"
+            loading="eager"
+        />
+      ) : (
+        <div class="w-[204px] h-[102px] bg-white/10 rounded flex items-center justify-center">
+          <span class="text-white text-lg font-semibold">Logo</span>
+        </div>
+      )}
      </a>
      <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 flex flex-wrap items-center text-sm justify-center">
-        {Right_Navbar_Items.map((item: NavbarItem) => {
+        {Right_Navbar_Items?.map((item: NavbarItem) => {
           return (<a
             href={item.url}
             class="mr-5 hover:text-gray-600"
@@ -49,7 +65,7 @@ const imageUrl = strapiUrl + Logo.url;
         })}
      </nav>
      <div class="flex space-x-2 items-center">
-      {Left_Navbar_Items.map((item: NavbarItem) => {
+      {Left_Navbar_Items?.map((item: NavbarItem) => {
         return (
           <a
             href={item.url}
