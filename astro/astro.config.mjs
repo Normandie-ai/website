@@ -23,6 +23,14 @@ const getBaseUrl = () => {
   if (isGitHubPages) {
     // Extract repository name from GITHUB_REPOSITORY (format: owner/repo)
     const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1];
+    
+    // If repository name matches GitHub Pages user/org site pattern (*.github.io),
+    // it should be hosted at root
+    if (repoName && repoName.endsWith('.github.io')) {
+      return '';
+    }
+    
+    // For project sites, use the repository name as base
     return repoName || 'website';
   }
   
