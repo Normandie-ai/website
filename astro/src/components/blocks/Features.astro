@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { marked } from "marked";
+import { getImageUrl } from "@lib/imageUtils";
 
 interface Props {
 	title: string;
@@ -19,7 +20,7 @@ const strapiUrl = import.meta.env.STRAPI_URL;
 
 const { title, titleImage, content, images = [], variant } = Astro.props;
 
-const imageUrl = titleImage ? strapiUrl + titleImage.url : null;
+const imageUrl = getImageUrl(titleImage?.url, strapiUrl);
 
 // Configure marked to properly handle markdown
 marked.setOptions({
@@ -104,7 +105,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {/* First image - spans 2 columns (wider) */}
               <div class="relative rounded-2xl h-48 col-span-2">
                 <img
-                  src={strapiUrl + images[0].url}
+                  src={getImageUrl(images[0].url, strapiUrl)}
                   alt={images[0].alternativeText || "Image 1"}
                   class="w-full h-full object-cover rounded-2xl"
                 />
@@ -116,7 +117,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {/* Second image - spans 1 column */}
               <div class="relative rounded-2xl h-48 col-span-1">
                 <img
-                  src={strapiUrl + images[1].url}
+                  src={getImageUrl(images[1].url, strapiUrl)}
                   alt={images[1].alternativeText || "Image 2"}
                   class="w-full h-full object-cover rounded-2xl"
                 />
@@ -128,7 +129,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {/* Third image - spans 1 column */}
               <div class="relative rounded-2xl h-48 col-span-1">
                 <img
-                  src={strapiUrl + images[2].url}
+                  src={getImageUrl(images[2].url, strapiUrl)}
                   alt={images[2].alternativeText || "Image 3"}
                   class="w-full h-full object-cover rounded-2xl"
                 />
@@ -140,7 +141,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {/* Fourth image - spans 2 columns (wider) */}
               <div class="relative rounded-2xl h-48 col-span-2">
                 <img
-                  src={strapiUrl + images[3].url}
+                  src={getImageUrl(images[3].url, strapiUrl)}
                   alt={images[3].alternativeText || "Image 4"}
                   class="w-full h-full object-cover rounded-2xl"
                 />
@@ -154,7 +155,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {/* First image - spans 2 columns (wider) */}
               <div class="relative rounded-2xl h-48 col-span-2">
                 <img
-                  src={strapiUrl + images[0].url}
+                  src={getImageUrl(images[0].url, strapiUrl)}
                   alt={images[0].alternativeText || "Image 1"}
                   class="w-full h-full object-cover rounded-2xl"
                 />
@@ -166,7 +167,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {/* Second image - spans 1 column */}
               <div class="relative rounded-2xl h-48 col-span-1">
                 <img
-                  src={strapiUrl + images[1].url}
+                  src={getImageUrl(images[1].url, strapiUrl)}
                   alt={images[1].alternativeText || "Image 2"}
                   class="w-full h-full object-cover rounded-2xl"
                 />
@@ -178,7 +179,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {/* Third image - spans full width (3 columns) */}
               <div class="relative rounded-2xl h-48 col-span-3">
                 <img
-                  src={strapiUrl + images[2].url}
+                  src={getImageUrl(images[2].url, strapiUrl)}
                   alt={images[2].alternativeText || "Image 3"}
                   class="w-full h-full object-cover rounded-2xl"
                 />
@@ -192,7 +193,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {images.map((image, index) => (
                 <div class="relative rounded-2xl h-100">
                   <img
-                    src={strapiUrl + image.url}
+                    src={getImageUrl(image.url, strapiUrl)}
                     alt={image.alternativeText || `Image ${index + 1}`}
                     class="w-full h-full object-cover rounded-2xl"
                   />
@@ -207,7 +208,7 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
               {images.map((image, index) => (
                 <div class="relative rounded-2xl h-100">
                   <img
-                    src={strapiUrl + image.url}
+                    src={getImageUrl(image.url, strapiUrl)}
                     alt={image.alternativeText || `Image ${index + 1}`}
                     class="w-full h-full object-cover rounded-2xl"
                   />

@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import fetchApi from "@lib/strapi";
+import { getImageUrl, getLinkUrl } from "@lib/imageUtils";
 
 interface NavbarItem {
 	title: string;
@@ -35,7 +36,7 @@ const Logo = navigationData?.Logo || null;
 const Right_Navbar_Items = navigationData?.Right_Navbar_Items || [];
 const Left_Navbar_Items = navigationData?.Left_Navbar_Items || [];
 
-const imageUrl = Logo ? strapiUrl + Logo.url : null;
+const imageUrl = getImageUrl(Logo?.url, strapiUrl);
 ---
 
 <header class="fixed text-slate-100 body-font z-20 w-full">
@@ -56,7 +57,7 @@ const imageUrl = Logo ? strapiUrl + Logo.url : null;
      </a>
      <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 flex flex-wrap items-center text-sm justify-center">
         {Right_Navbar_Items?.map((item: NavbarItem) => {
-          const href = item.url.startsWith('/') ? `${baseUrl}${item.url.slice(1)}` : item.url;
+          const href = getLinkUrl(item.url, baseUrl);
           return (<a
             href={href}
             class="mr-5 hover:text-gray-600"
@@ -68,7 +69,7 @@ const imageUrl = Logo ? strapiUrl + Logo.url : null;
      </nav>
      <div class="flex space-x-2 items-center">
       {Left_Navbar_Items?.map((item: NavbarItem) => {
-        const href = item.url.startsWith('/') ? `${baseUrl}${item.url.slice(1)}` : item.url;
+        const href = getLinkUrl(item.url, baseUrl);
         return (
           <a
             href={href}

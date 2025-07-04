@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Card from "../shared/Card.astro";
 import gradientOverlay from "@assets/gradient-nai-2025.png";
+import { getImageUrl } from "@lib/imageUtils";
 
 interface CardData {
 	title: string;
@@ -22,7 +23,7 @@ const strapiUrl = import.meta.env.STRAPI_URL;
 
 const { cards, backgroundImage } = Astro.props;
 
-const imageUrl = backgroundImage ? strapiUrl + backgroundImage.url : null;
+const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 ---
 
 <section class="relative py-20 px-24 mx-auto overflow-hidden">
