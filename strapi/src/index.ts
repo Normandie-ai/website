@@ -10,6 +10,11 @@ export default {
   register({ strapi }) {
     // Simple function to trigger GitHub Pages deployment
     async function triggerGitHubDeploy() {
+      if (process.env.NODE_ENV !== 'production') {
+        strapi.log.info('🔍 Skipping GitHub deployment in non-production environment');
+        return;
+      }
+
       try {
         const githubToken = process.env.GITHUB_TOKEN;
         const repository = process.env.GITHUB_REPOSITORY;

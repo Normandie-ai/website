@@ -46,6 +46,24 @@ export interface BlocksHero extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksStats extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_stats';
+  info: {
+    description: 'Statistics section with dynamic grid layout';
+    displayName: 'Stats';
+    icon: 'chartLine';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    ctaLink: Schema.Attribute.String;
+    ctaText: Schema.Attribute.String;
+    stats: Schema.Attribute.JSON & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    variant: Schema.Attribute.Enumeration<['default', 'dark']> &
+      Schema.Attribute.DefaultTo<'dark'>;
+  };
+}
+
 export interface BlocksTeam extends Struct.ComponentSchema {
   collectionName: 'components_blocks_teams';
   info: {
@@ -96,6 +114,7 @@ declare module '@strapi/strapi' {
       'blocks.cards': BlocksCards;
       'blocks.features': BlocksFeatures;
       'blocks.hero': BlocksHero;
+      'blocks.stats': BlocksStats;
       'blocks.team': BlocksTeam;
       'components.card': ComponentsCard;
       'components.link': ComponentsLink;

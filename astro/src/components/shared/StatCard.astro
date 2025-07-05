@@ -1,0 +1,43 @@
+---
+interface Props {
+  icon: string;
+  title: string;
+  subtitle?: string;
+  colSpan?: number;
+  variant?: "default" | "dark";
+}
+
+const { icon, title, subtitle, colSpan = 1, variant = "dark" } = Astro.props;
+
+const colSpanClass = colSpan === 2 ? "col-span-2" : colSpan === 3 ? "col-span-3" : "col-span-1";
+const textColor = variant === "dark" ? "text-white" : "text-gray-900";
+---
+
+<style>
+  .stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .icon-container {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+  }
+</style>
+
+<div class={`stat-card rounded-2xl p-6 text-center ${textColor} ${colSpanClass}`}>
+  <div class="icon-container w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center">
+    <div class="text-2xl" set:html={icon} />
+  </div>
+  <h3 class="text-xl font-semibold mb-2">{title}</h3>
+  {subtitle && (
+    <p class="text-sm opacity-80">{subtitle}</p>
+  )}
+</div> 

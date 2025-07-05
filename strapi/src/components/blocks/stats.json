@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_blocks_stats",
+  "info": {
+    "displayName": "Stats",
+    "description": "Statistics section with dynamic grid layout",
+    "icon": "chartLine"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "stats": {
+      "type": "json",
+      "required": true
+    },
+    "ctaText": {
+      "type": "string",
+      "required": false
+    },
+    "ctaLink": {
+      "type": "string",
+      "required": false
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "dark"
+      ],
+      "default": "dark"
+    }
+  }
+} 

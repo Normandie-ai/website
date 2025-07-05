@@ -3,6 +3,7 @@ import Features from "./Features.astro";
 import Hero from "./Hero.astro";
 import Team from "./Team.astro";
 import Cards from "./Cards.astro";
+import Stats from "./Stats.astro";
 
 interface Block {
 	__component: string;
@@ -22,6 +23,7 @@ const componentMap: Record<string, any> = {
 	"blocks.features": Features,
 	"blocks.team": Team,
 	"blocks.cards": Cards,
+	"blocks.stats": Stats,
 };
 ---
 

@@ -20,7 +20,8 @@
         "blocks.hero",
         "blocks.features",
         "blocks.team",
-        "blocks.cards"
+        "blocks.cards",
+        "blocks.stats"
       ]
     }
   }

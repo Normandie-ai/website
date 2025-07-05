@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-07-04T22:57:03.453Z"
+    "x-generation-date": "2025-07-05T08:22:30.878Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4783,6 +4783,9 @@
                     },
                     {
                       "$ref": "#/components/schemas/BlocksCardsComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BlocksStatsComponent"
                     }
                   ]
                 },
@@ -4792,7 +4795,8 @@
                     "blocks.hero": "#/components/schemas/BlocksHeroComponent",
                     "blocks.features": "#/components/schemas/BlocksFeaturesComponent",
                     "blocks.team": "#/components/schemas/BlocksTeamComponent",
-                    "blocks.cards": "#/components/schemas/BlocksCardsComponent"
+                    "blocks.cards": "#/components/schemas/BlocksCardsComponent",
+                    "blocks.stats": "#/components/schemas/BlocksStatsComponent"
                   }
                 }
               },
@@ -4879,6 +4883,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/BlocksCardsComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/BlocksStatsComponent"
                 }
               ]
             },
@@ -4888,7 +4895,8 @@
                 "blocks.hero": "#/components/schemas/BlocksHeroComponent",
                 "blocks.features": "#/components/schemas/BlocksFeaturesComponent",
                 "blocks.team": "#/components/schemas/BlocksTeamComponent",
-                "blocks.cards": "#/components/schemas/BlocksCardsComponent"
+                "blocks.cards": "#/components/schemas/BlocksCardsComponent",
+                "blocks.stats": "#/components/schemas/BlocksStatsComponent"
               }
             }
           },
@@ -4958,6 +4966,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/BlocksCardsComponent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/BlocksStatsComponent"
                       }
                     ]
                   },
@@ -4967,7 +4978,8 @@
                       "blocks.hero": "#/components/schemas/BlocksHeroComponent",
                       "blocks.features": "#/components/schemas/BlocksFeaturesComponent",
                       "blocks.team": "#/components/schemas/BlocksTeamComponent",
-                      "blocks.cards": "#/components/schemas/BlocksCardsComponent"
+                      "blocks.cards": "#/components/schemas/BlocksCardsComponent",
+                      "blocks.stats": "#/components/schemas/BlocksStatsComponent"
                     }
                   }
                 },
@@ -5795,6 +5807,40 @@
             "enum": [
               "blue",
               "purple"
+            ]
+          }
+        }
+      },
+      "BlocksStatsComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "__component": {
+            "type": "string",
+            "enum": [
+              "blocks.stats"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "stats": {},
+          "ctaText": {
+            "type": "string"
+          },
+          "ctaLink": {
+            "type": "string"
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "default",
+              "dark"
             ]
           }
         }
