@@ -31,8 +31,9 @@ marked.setOptions({
 });
 
 const parsedContent = description ? marked.parse(description) : null;
+
 ---
-<section class="h-screen overflow-hidden relative flex flex-col items-center justify-center">
+<section class="h-screen overflow-hidden relative flex flex-col items-center justify-center block-transition">
    {imageUrl && (
      <Image src={imageUrl}
         alt=""
@@ -56,3 +57,10 @@ const parsedContent = description ? marked.parse(description) : null;
       </div>)}
    </div>
 </section>
+
+<script>
+   import { applySectionClipPath } from "@lib/clipPath";
+
+   const section = document.querySelector('.block-transition') as HTMLElement;
+   applySectionClipPath(section);
+</script>
