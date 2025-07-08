@@ -28,6 +28,10 @@
       "type": "component",
       "repeatable": false,
       "component": "components.link"
+    },
+    "hasBlockTransition": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

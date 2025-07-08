@@ -42,6 +42,8 @@ export interface BlocksHero extends Struct.ComponentSchema {
     >;
     button: Schema.Attribute.Component<'components.link', false>;
     description: Schema.Attribute.RichText;
+    hasBlockTransition: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     title: Schema.Attribute.String;
   };
 }
