@@ -3,12 +3,14 @@ import type { Schema, Struct } from '@strapi/strapi';
 export interface BlocksCards extends Struct.ComponentSchema {
   collectionName: 'components_blocks_cards';
   info: {
+    description: '';
     displayName: 'Cards';
     icon: 'grid';
   };
   attributes: {
     backgroundImage: Schema.Attribute.Media<'images'>;
     cards: Schema.Attribute.Component<'components.card', true>;
+    hasNotch: Schema.Attribute.Boolean;
     variant: Schema.Attribute.Enumeration<['blue', 'purple']>;
   };
 }
@@ -22,6 +24,7 @@ export interface BlocksFeatures extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.RichText;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     images: Schema.Attribute.Media<'images', true>;
     title: Schema.Attribute.String;
     titleImage: Schema.Attribute.Media;
@@ -42,8 +45,7 @@ export interface BlocksHero extends Struct.ComponentSchema {
     >;
     button: Schema.Attribute.Component<'components.link', false>;
     description: Schema.Attribute.RichText;
-    hasBlockTransition: Schema.Attribute.Boolean &
-      Schema.Attribute.DefaultTo<false>;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     title: Schema.Attribute.String;
   };
 }

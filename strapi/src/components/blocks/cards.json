@@ -1,25 +1,34 @@
 {
-    "collectionName": "components_blocks_cards",
-    "info": {
-        "displayName": "Cards",
-        "icon": "grid"
+  "collectionName": "components_blocks_cards",
+  "info": {
+    "displayName": "Cards",
+    "icon": "grid",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.card"
     },
-    "options": {},
-    "attributes": {
-        "cards": {
-            "type": "component",
-            "repeatable": true,
-            "component": "components.card"
-        },
-        "backgroundImage": {
-            "type": "media",
-            "multiple": false,
-            "required": false,
-            "allowedTypes": ["images"]
-        },
-        "variant": {
-            "type": "enumeration",
-            "enum": ["blue", "purple"]
-        }
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "blue",
+        "purple"
+      ]
+    },
+    "hasNotch": {
+      "type": "boolean"
     }
+  }
 }

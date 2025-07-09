@@ -29,7 +29,7 @@
       "repeatable": false,
       "component": "components.link"
     },
-    "hasBlockTransition": {
+    "hasNotch": {
       "type": "boolean",
       "default": false
     }
