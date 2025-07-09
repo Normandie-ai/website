@@ -8,6 +8,7 @@ import { Image } from "astro:assets";
 import NotchArrow from "@components/shared/NotchArrow.astro";
 
 interface Props {
+   zIndex: number;
 	title: string;
 	description: string;
 	backgroundImage: {
@@ -19,11 +20,13 @@ interface Props {
 		url: string;
 		target: "_blank" | "_self" | "_parent" | "_top";
 	};
-   hasBlockTransition: boolean;
+   hasNotch: boolean;
+   previousBlockHasNotch: boolean;
 }
+
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { title, description, backgroundImage, button, hasBlockTransition } = Astro.props;
+const { zIndex, title, description, backgroundImage, button, hasNotch, previousBlockHasNotch } = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage.url, strapiUrl);
 // Configure marked to properly handle markdown
@@ -35,38 +38,50 @@ marked.setOptions({
 const parsedContent = description ? marked.parse(description) : null;
 
 ---
-<section class="h-screen overflow-hidden relative flex flex-col items-center justify-center block-transition">
-   {imageUrl && (
-     <Image src={imageUrl}
-        alt=""
-        class="absolute inset-0 w-full h-full object-cover z-0"
-        width="1920"
-        height="1080"
-        loading="eager"
-     />
-   )}
-   <div class="flex flex-col items-start justify-center h-full w-full z-10 px-8 md:px-36">
-      <AvegaTitle title={title} />
-      <div class="text-white text-start mt-2 md:mt-6 text-md md:text-md max-w-3xl relative z-10">
-         <article set:html={parsedContent} />
-       </div>
-      {button && (<div class="mt-18">
-         <Button 
-            text={button.title}
-            target={button.target}
-            url={button.url}
+<section class=`overflow-hidden relative h-screen ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` style={{
+   zIndex: zIndex
+}}>
+   <div class="h-full overflow-hidden relative flex flex-col items-center justify-center" id="hero">
+      {imageUrl && (
+         <Image src={imageUrl}
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover z-0"
+            width="1920"
+            height="1080"
+            loading="eager"
          />
-      </div>)}
-   </div>
+      )}
+      <div class="flex flex-col items-start justify-center h-full w-full z-10 px-8 md:px-36">
+         <AvegaTitle title={title} />
+         <div class="text-white text-start mt-2 md:mt-6 text-md md:text-md max-w-3xl relative z-10">
+            <article set:html={parsedContent} />
+         </div>
+         {button && (
+            <div class="mt-18">
+               <Button 
+                  text={button.title}
+                  target={button.target}
+                  url={button.url}
+               />
+            </div>
+         )}
+      </div>
 
-   {hasBlockTransition && (
-      <NotchArrow color="#ffffff" />
-   )}
+      {hasNotch && (
+         <NotchArrow color="#ffffff" />
+      )}
+   </div>
 </section>
 
-<script>
-   import { applySectionClipPath } from "@lib/clipPath";
-
-   const section = document.querySelector('.block-transition') as HTMLElement;
-   applySectionClipPath(section);
-</script>
+{hasNotch && (
+   <script>
+      import { applySectionClipPathWithBorder } from "@lib/clipPath";
+   
+      const section = document.querySelector('#hero') as HTMLElement;
+   
+      applySectionClipPathWithBorder({
+         section,
+         borderColor: "#6336E4",
+      });
+   </script>
+)}
