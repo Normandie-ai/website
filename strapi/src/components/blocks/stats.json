@@ -34,6 +34,10 @@
         "dark"
       ],
       "default": "dark"
+    },
+    "hasNotch": {
+      "type": "boolean",
+      "default": false
     }
   }
-} 
+}
