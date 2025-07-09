@@ -31,12 +31,14 @@ const { zIndex, cards, backgroundImage, variant, hasNotch, previousBlockHasNotch
 
 const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 const gradientOverlay = variant === "blue" ? gradientOverlayBlue : gradientOverlayPurple;
+
+const sectionId = `cards-${zIndex}`;
 ---
 
 <section class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` style={{
    zIndex: zIndex
 }}>
-	<div id="cards" class="relative w-full py-48 px-48 mx-auto">
+	<div data-section-id={sectionId} class="relative w-full py-48 px-48 mx-auto">
 		{imageUrl && (
 			<Image 
 				src={imageUrl}
@@ -74,16 +76,17 @@ const gradientOverlay = variant === "blue" ? gradientOverlayBlue : gradientOverl
 
 </section>
 
-{hasNotch && (
-	<script>
-	   import { applySectionClipPathWithBorder } from "@lib/clipPath";
-	
-	   const section = document.querySelector('#cards') as HTMLElement;
-	
-	   applySectionClipPathWithBorder({
-		  section,
-		  borderColor: "#6336E4",
-	   });
-	</script>
- )}
  
+{hasNotch && (
+	<script define:vars={{ sectionId }}>
+		const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+		if (section) {
+		import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
+			applySectionClipPathWithBorder({
+			section,
+			borderColor: "#6336E4",
+			});
+		});
+		}
+	</script>
+)}

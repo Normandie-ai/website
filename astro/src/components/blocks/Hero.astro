@@ -37,11 +37,14 @@ marked.setOptions({
 
 const parsedContent = description ? marked.parse(description) : null;
 
+const sectionId = `hero-${zIndex}`;
+
 ---
+
 <section class=`overflow-hidden relative h-screen ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` style={{
    zIndex: zIndex
 }}>
-   <div class="h-full overflow-hidden relative flex flex-col items-center justify-center" id="hero">
+   <div data-section-id={sectionId} class="h-full overflow-hidden relative flex flex-col items-center justify-center" >
       {imageUrl && (
          <Image src={imageUrl}
             alt=""
@@ -73,15 +76,17 @@ const parsedContent = description ? marked.parse(description) : null;
    </div>
 </section>
 
+
 {hasNotch && (
-   <script>
-      import { applySectionClipPathWithBorder } from "@lib/clipPath";
-   
-      const section = document.querySelector('#hero') as HTMLElement;
-   
-      applySectionClipPathWithBorder({
-         section,
-         borderColor: "#6336E4",
-      });
+   <script define:vars={{ sectionId }}>
+     const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+     if (section) {
+       import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
+         applySectionClipPathWithBorder({
+           section,
+           borderColor: "#6336E4",
+         });
+       });
+     }
    </script>
-)}
+ )}

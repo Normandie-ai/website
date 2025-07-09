@@ -58,7 +58,11 @@ const containerClass = hasImages
   : "flex justify-center";
 
 // Apply background color if provided
-const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
+const variantColor = variant === "dark" ? "#191958" : "#ffffff";
+const sectionStyle = `background-color: ${variantColor}`;
+const arrowColor = variant === "dark" ? "#ffffff" : "#CF65FB";
+
+const sectionId = `features-${zIndex}`;
 ---
 
 <style>
@@ -69,8 +73,8 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
 </style>
 
 
-<section style={`z-index: ${zIndex}; ${sectionStyle}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`>
-  <div id="features" class="relative mx-auto bg-white">
+<section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`>
+  <div data-section-id={sectionId} class=`relative mx-auto` style={sectionStyle}>
     <!-- Decorative blurred circles - only show for dark variant -->
     {variant === "dark" && (
       <>
@@ -231,21 +235,22 @@ const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
     </div>
 
     {hasNotch && (
-      <NotchArrow color="#CF65FB" />
+      <NotchArrow color={arrowColor} />
    )}
   </div>
 </section>
 
 
 {hasNotch && (
-  <script>
-    import { applySectionClipPathWithBorder } from "@lib/clipPath";
-
-    const section = document.querySelector('#features') as HTMLElement;
-
-    applySectionClipPathWithBorder({
-        section,
-        borderColor: "#ffffff",
-    });
+  <script define:vars={{ sectionId, variantColor }}>
+    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+    if (section) {
+      import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
+        applySectionClipPathWithBorder({
+          section,
+          borderColor: variantColor,
+        });
+      });
+    }
   </script>
 )}
