@@ -1,20 +1,29 @@
-export const applySectionClipPath = (section: HTMLElement): void => {
-  const resizeHandler = () => updateSectionClipPath(section);
+export const applySectionClipPathWithBorder = ({
+  section,
+  borderColor,
+}: {
+  section: HTMLElement;
+  borderColor: string;
+}): void => {
+  const resizeHandler = () => updateSectionClipPath(section, borderColor);
 
   resizeHandler();
   window.addEventListener("resize", resizeHandler);
 };
 
-const updateSectionClipPath = (section: HTMLElement) => {
+const updateSectionClipPath = (section: HTMLElement, borderColor: string) => {
   try {
-    const params = computeClipPathParams(section);
-    const clipPath = generateClipPathString(params);
+    const paramsSection = computeClipPathParams(section);
+    const clipPathSection = generateClipPathString(paramsSection);
 
-    applyClipPath(section, clipPath);
+    applyClipPath(section, clipPathSection);
 
-    const shadow = getOrCreateShadowClone(section);
-    applyClipPath(shadow, clipPath);
-    styleShadowClone(shadow);
+    const shadow = getOrCreateShadowClone(section, borderColor);
+
+    const paramsShadowClone = computeClipPathParams(section, true);
+    const clipPathShadowClone = generateClipPathString(paramsShadowClone);
+
+    applyClipPath(shadow, clipPathShadowClone);
   } catch (error) {
     console.error(error);
   }
@@ -37,19 +46,22 @@ interface ClipPathParams {
   cornerRadius: number;
 }
 
-const computeClipPathParams = (section: HTMLElement): ClipPathParams => {
+const computeClipPathParams = (
+  section: HTMLElement,
+  isClone: boolean = false
+): ClipPathParams => {
   const width = window.innerWidth;
   const height = section.clientHeight;
   const centerX = width / 2;
 
   const cornerRadius = 6;
-  const bottomY = height * 0.97;
+  const bottomY = height - 30;
   const fullBottomY = height;
 
-  const leftCornerX = centerX - 120;
-  const leftNotchStartX = centerX - 100;
-  const rightNotchEndX = centerX + 100;
-  const rightCornerX = centerX + 120;
+  const leftCornerX = !isClone ? centerX - 120 : centerX - 128;
+  const leftNotchStartX = !isClone ? centerX - 100 : centerX - 108;
+  const rightNotchEndX = !isClone ? centerX + 100 : centerX + 108;
+  const rightCornerX = !isClone ? centerX + 120 : centerX + 128;
 
   const diagonalSlope =
     (fullBottomY - bottomY) / (leftNotchStartX - leftCornerX);
@@ -94,14 +106,17 @@ const generateClipPathString = (params: ClipPathParams): string => {
   } 0 Z")`;
 };
 
-const getOrCreateShadowClone = (section: HTMLElement): HTMLElement => {
+const getOrCreateShadowClone = (
+  section: HTMLElement,
+  borderColor: string
+): HTMLElement => {
   const parent = section.parentElement;
   if (!parent) throw new Error("Section has no parent");
   let shadow = getShadowClone(parent);
 
   if (shadow) return shadow;
 
-  shadow = createShadowClone(section);
+  shadow = createShadowClone(borderColor);
 
   parent.insertBefore(shadow, section);
 
@@ -113,70 +128,33 @@ const getShadowClone = (parent: HTMLElement): HTMLElement | null => {
   return shadow;
 };
 
-const createShadowClone = (section: HTMLElement): HTMLElement => {
-  const clonedImg = cloneImageFromSection(section);
-
-  clonedImg.setAttribute("aria-hidden", "true");
-  clonedImg.setAttribute("alt", "");
-
+const createShadowClone = (borderColor: string): HTMLElement => {
   const shadow = document.createElement("div");
   shadow.classList.add("section-shadow");
 
   shadow.setAttribute("aria-hidden", "true");
   shadow.setAttribute("role", "presentation");
 
-  Object.assign(shadow.style, {
-    position: "absolute",
-    top: "0",
-    left: "0",
-    width: "100%",
-    height: "100%",
-    pointerEvents: "none",
-    zIndex: "0",
-    overflow: "hidden",
-  });
+  styleShadowClone(shadow, borderColor);
 
-  shadow.appendChild(clonedImg);
   return shadow;
-};
-
-const cloneImageFromSection = (section: HTMLElement): HTMLImageElement => {
-  const originalImg = section.querySelector("img");
-
-  if (!originalImg) {
-    throw new Error("No <img> found in section to clone.");
-  }
-
-  const clone = originalImg.cloneNode(true) as HTMLImageElement;
-  applyComputedStylesToImage(clone, originalImg);
-  return clone;
-};
-
-const applyComputedStylesToImage = (
-  target: HTMLImageElement,
-  source: HTMLImageElement
-) => {
-  const computed = getComputedStyle(source);
-
-  Object.assign(target.style, {
-    position: computed.position,
-    top: computed.top,
-    left: computed.left,
-    right: computed.right,
-    bottom: computed.bottom,
-    width: "100%",
-    height: "100%",
-    objectFit: computed.objectFit,
-    transform: computed.transform,
-    display: "block",
-  });
 };
 
 const applyClipPath = (element: HTMLElement, clipPath: string) => {
   element.style.clipPath = clipPath;
 };
 
-const styleShadowClone = (shadow: HTMLElement) => {
-  shadow.style.transform = "scaleX(1.05) scaleY(1.02) translateY(4px)";
-  shadow.style.opacity = "0.3";
+const styleShadowClone = (shadow: HTMLElement, borderColor: string) => {
+  shadow.style.opacity = "0.2";
+  Object.assign(shadow.style, {
+    position: "absolute",
+    top: "10px",
+    left: "0%",
+    width: "100%",
+    height: "100%",
+    pointerEvents: "none",
+    zIndex: "0",
+    overflow: "hidden",
+    backgroundColor: borderColor,
+  });
 };
