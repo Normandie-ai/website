@@ -5,6 +5,7 @@ import { getImageUrl } from "@lib/imageUtils";
 import { marked } from "marked";
 
 import { Image } from "astro:assets";
+import NotchArrow from "@components/shared/NotchArrow.astro";
 
 interface Props {
 	title: string;
@@ -18,10 +19,11 @@ interface Props {
 		url: string;
 		target: "_blank" | "_self" | "_parent" | "_top";
 	};
+   hasBlockTransition: boolean;
 }
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { title, description, backgroundImage, button } = Astro.props;
+const { title, description, backgroundImage, button, hasBlockTransition } = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage.url, strapiUrl);
 // Configure marked to properly handle markdown
@@ -56,6 +58,10 @@ const parsedContent = description ? marked.parse(description) : null;
          />
       </div>)}
    </div>
+
+   {hasBlockTransition && (
+      <NotchArrow color="#ffffff" />
+   )}
 </section>
 
 <script>
