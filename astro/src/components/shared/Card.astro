@@ -20,7 +20,7 @@ const { title, subtitle, description, icon, backgroundImage } = Astro.props;
 const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 ---
 
-<div class="relative h-full p-8 pb-10 text-center rounded-2xl backdrop-blur-xs bg-[#424242]/10 border border-white shadow-xl hover:shadow-2xl transition-all duration-300 group hover:scale-105 max-w-5xl"
+<div class="relative size-full p-8 pb-10 text-center rounded-2xl backdrop-blur-xs bg-[#424242]/10 border border-white shadow-xl hover:shadow-2xl transition-all duration-300 group hover:scale-105 max-w-5xl"
 	style={
 		backgroundImage && {
 		backgroundImage: `url(${imageUrl})`,

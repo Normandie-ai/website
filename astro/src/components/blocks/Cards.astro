@@ -38,7 +38,7 @@ const containerClass = hasMultipleCards
   : "flex justify-center";
 ---
 
-<section class="relative py-48 px-48 mx-auto overflow-hidden">
+<section class="relative py-48 mx-auto overflow-hidden">
 	{imageUrl && (
 		<Image 
 			src={imageUrl}
@@ -58,7 +58,7 @@ const containerClass = hasMultipleCards
 		loading="lazy"
 	/>
 	
-	<div class={`relative z-10 ${containerClass}`}>
+	<div class={`relative z-10 ${containerClass} max-w-screen-xl mx-auto px-16`}>
 		{cards && cards.map((card) => (
 			<Card
 				title={card.title}
