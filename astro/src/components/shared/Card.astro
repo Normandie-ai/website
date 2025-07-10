@@ -1,50 +1,57 @@
 ---
 import AvegaTitle from "./AvegaTitle.astro";
+import { getImageUrl } from "@lib/imageUtils";
 
 interface Props {
 	title: string;
 	subtitle?: string;
 	description: string;
 	icon?: string;
+	backgroundImage?: {
+		url: string;
+		alternativeText: string;
+	};
 }
 
-const { title, subtitle, description, icon } = Astro.props;
+const strapiUrl = import.meta.env.STRAPI_URL;
+
+const { title, subtitle, description, icon, backgroundImage } = Astro.props;
+
+const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 ---
 
-<div class="relative p-8 text-center rounded-2xl backdrop-blur-xs bg-[#424242]/10 border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300 group hover:scale-105">
+<div class="relative size-full p-8 pb-10 text-center rounded-2xl backdrop-blur-xs bg-[#424242]/10 border border-white shadow-xl hover:shadow-2xl transition-all duration-300 group hover:scale-105 max-w-5xl"
+	style={
+		backgroundImage && {
+		backgroundImage: `url(${imageUrl})`,
+		backgroundSize: 'cover',
+		backgroundPosition: 'center',
+	}}
+>
 	{icon && (
 		<div class="relative mb-6 flex justify-center">
-			<div class="w-16 h-16 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/20 flex items-center justify-center">
-				<svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-					{icon === "location" && (
-						<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM12 11.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-					)}
-					{icon === "calendar" && (
-						<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-					)}
-				</svg>
-			</div>
+			<svg class="h-14 aspect-square text-white/50" fill="currentColor" viewBox="0 0 24 24">
+				{icon === "location" && (
+					<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM12 11.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+				)}
+				{icon === "calendar" && (
+					<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+				)}
+			</svg>
 		</div>
 	)}
 	
-	<!-- Title -->
-	<!-- <h3 class="relative text-2xl font-bold text-white mb-3 text-center group-hover:text-white/95 transition-colors">
-		{title}
-	</h3> -->
-	<AvegaTitle title={title} level={4} />
+	<AvegaTitle title={title} level={4} className="mx-auto" />
 	
-	<!-- Subtitle -->
 	{subtitle && (
-		<p class="relative text-white/80 font-medium mb-4 text-center text-sm">
+		<p class="relative text-white font-bold text-center text-sm">
 			{subtitle}
 		</p>
 	)}
 	
-	<!-- Description -->
-	<p class="relative text-white/90 leading-relaxed text-center text-sm max-w-md mx-auto">
+	<p class="relative mt-4 text-white/90 leading-relaxed text-center text-sm mx-auto">
 		{description}
 	</p>
 	
-	<!-- Hover glow effect -->
 	<div class="absolute inset-0 rounded-2xl bg-white/5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"></div>
 </div> 

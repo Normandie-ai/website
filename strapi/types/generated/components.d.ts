@@ -3,6 +3,7 @@ import type { Schema, Struct } from '@strapi/strapi';
 export interface BlocksCards extends Struct.ComponentSchema {
   collectionName: 'components_blocks_cards';
   info: {
+    description: '';
     displayName: 'Cards';
     icon: 'grid';
   };
@@ -81,10 +82,12 @@ export interface BlocksTeam extends Struct.ComponentSchema {
 export interface ComponentsCard extends Struct.ComponentSchema {
   collectionName: 'components_components_cards';
   info: {
+    description: '';
     displayName: 'Card';
     icon: 'grid';
   };
   attributes: {
+    backgroundImage: Schema.Attribute.Media<'images' | 'files'>;
     description: Schema.Attribute.String;
     icon: Schema.Attribute.String;
     subtitle: Schema.Attribute.String;

@@ -1,22 +1,31 @@
 {
-    "collectionName": "components_components_cards",
-    "info": {
-        "displayName": "Card",
-        "icon": "grid"
+  "collectionName": "components_components_cards",
+  "info": {
+    "displayName": "Card",
+    "icon": "grid",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
     },
-    "options": {},
-    "attributes": {
-        "title": {
-            "type": "string"
-        },
-        "subtitle": {
-            "type": "string"
-        },
-        "description": {
-            "type": "string"
-        },
-        "icon": {
-            "type": "string"
-        }
+    "subtitle": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "backgroundImage": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false
     }
+  }
 }
