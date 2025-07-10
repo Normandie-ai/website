@@ -43,7 +43,7 @@ const imageUrl = getImageUrl(Logo?.url, strapiUrl);
 ---
 
 <header class="fixed text-slate-100 body-font z-20 w-full">
-   <div class="mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center px-8 md:px-36 py-12">
+   <div class="max-w-screen-xl mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center px-8 py-12">
      <a href={baseUrl} class="flex title-font font-medium items-center mb-4 md:mb-0">
       {Logo && imageUrl ? (
         <Image src={imageUrl}
