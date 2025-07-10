@@ -54,7 +54,7 @@ const sectionId = `hero-${zIndex}`;
             loading="eager"
          />
       )}
-      <div class="flex flex-col items-start justify-center h-full w-full z-10 px-8 md:px-36">
+      <div class="max-w-screen-xl mx-auto flex flex-col items-start justify-center h-full w-full z-10 px-8">
          <AvegaTitle title={title} />
          <div class="text-white text-start mt-2 md:mt-6 text-md md:text-md max-w-3xl relative z-10">
             <article set:html={parsedContent} />

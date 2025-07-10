@@ -12,11 +12,7 @@ const query = qs.stringify(
 				$eq: "home",
 			},
 		},
-		populate: {
-			blocks: {
-				populate: "*",
-			},
-		},
+		customPopulate: "nested",
 	},
 	{
 		encodeValuesOnly: true,

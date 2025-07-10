@@ -61,6 +61,7 @@ export interface BlocksStats extends Struct.ComponentSchema {
     content: Schema.Attribute.RichText & Schema.Attribute.Required;
     ctaLink: Schema.Attribute.String;
     ctaText: Schema.Attribute.String;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     stats: Schema.Attribute.JSON & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     variant: Schema.Attribute.Enumeration<['default', 'dark']> &
@@ -85,10 +86,12 @@ export interface BlocksTeam extends Struct.ComponentSchema {
 export interface ComponentsCard extends Struct.ComponentSchema {
   collectionName: 'components_components_cards';
   info: {
+    description: '';
     displayName: 'Card';
     icon: 'grid';
   };
   attributes: {
+    backgroundImage: Schema.Attribute.Media<'images' | 'files'>;
     description: Schema.Attribute.String;
     icon: Schema.Attribute.String;
     subtitle: Schema.Attribute.String;
