@@ -20,7 +20,7 @@ const { title, subtitle, description, icon, backgroundImage } = Astro.props;
 const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 ---
 
-<div class="relative p-8 text-center rounded-2xl backdrop-blur-xs bg-[#424242]/10 border border-white shadow-xl hover:shadow-2xl transition-all duration-300 group hover:scale-105"
+<div class="relative h-full p-8 pb-10 text-center rounded-2xl backdrop-blur-xs bg-[#424242]/10 border border-white shadow-xl hover:shadow-2xl transition-all duration-300 group hover:scale-105 max-w-5xl"
 	style={
 		backgroundImage && {
 		backgroundImage: `url(${imageUrl})`,
@@ -41,7 +41,7 @@ const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 		</div>
 	)}
 	
-	<AvegaTitle title={title} level={4} />
+	<AvegaTitle title={title} level={4} className="mx-auto" />
 	
 	{subtitle && (
 		<p class="relative text-white font-bold text-center text-sm">
@@ -49,7 +49,7 @@ const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 		</p>
 	)}
 	
-	<p class="relative mt-4 text-white/90 leading-relaxed text-center text-sm max-w-md mx-auto">
+	<p class="relative mt-4 text-white/90 leading-relaxed text-center text-sm mx-auto">
 		{description}
 	</p>
 	
