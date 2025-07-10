@@ -10,6 +10,10 @@ interface CardData {
 	subtitle?: string;
 	description: string;
 	icon?: string;
+	backgroundImage?: {
+		url: string;
+		alternativeText: string;
+	};
 }
 
 interface Props {
@@ -27,6 +31,11 @@ const { cards, backgroundImage, variant } = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 const gradientOverlay = variant === "blue" ? gradientOverlayBlue : gradientOverlayPurple;
+
+const hasMultipleCards = cards?.length > 1;
+const containerClass = hasMultipleCards 
+  ? "grid grid-cols-1 lg:grid-cols-2 gap-12 items-start"
+  : "flex justify-center";
 ---
 
 <section class="relative py-48 px-48 mx-auto overflow-hidden">
@@ -49,13 +58,14 @@ const gradientOverlay = variant === "blue" ? gradientOverlayBlue : gradientOverl
 		loading="lazy"
 	/>
 	
-	<div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+	<div class={`relative z-10 ${containerClass}`}>
 		{cards && cards.map((card) => (
 			<Card
 				title={card.title}
 				subtitle={card.subtitle}
 				description={card.description}
 				icon={card.icon}
+				backgroundImage={card.backgroundImage}
 			/>
 		))}
 	</div>
