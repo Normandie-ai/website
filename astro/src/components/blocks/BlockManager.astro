@@ -28,8 +28,8 @@ const componentMap: Record<string, any> = {
 ---
 
 {
-  blocks.map((block) => {
+  blocks.map((block, index) => {
     const Component = componentMap[block.__component]
-    return Component ? <Component {...block} /> : null
+    return Component ? <Component {...block} zIndex={blocks.length - index} previousBlockHasNotch={blocks[index - 1]?.hasNotch} /> : null
   })
 }

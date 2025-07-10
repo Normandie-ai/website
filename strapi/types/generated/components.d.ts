@@ -10,6 +10,7 @@ export interface BlocksCards extends Struct.ComponentSchema {
   attributes: {
     backgroundImage: Schema.Attribute.Media<'images'>;
     cards: Schema.Attribute.Component<'components.card', true>;
+    hasNotch: Schema.Attribute.Boolean;
     variant: Schema.Attribute.Enumeration<['blue', 'purple']>;
   };
 }
@@ -23,6 +24,7 @@ export interface BlocksFeatures extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.RichText;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     images: Schema.Attribute.Media<'images', true>;
     title: Schema.Attribute.String;
     titleImage: Schema.Attribute.Media;
@@ -43,6 +45,7 @@ export interface BlocksHero extends Struct.ComponentSchema {
     >;
     button: Schema.Attribute.Component<'components.link', false>;
     description: Schema.Attribute.RichText;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     title: Schema.Attribute.String;
   };
 }
@@ -58,6 +61,7 @@ export interface BlocksStats extends Struct.ComponentSchema {
     content: Schema.Attribute.RichText & Schema.Attribute.Required;
     ctaLink: Schema.Attribute.String;
     ctaText: Schema.Attribute.String;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     stats: Schema.Attribute.JSON & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     variant: Schema.Attribute.Enumeration<['default', 'dark']> &

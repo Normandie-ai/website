@@ -28,8 +28,15 @@
     },
     "variant": {
       "type": "string",
-      "enum": ["default", "dark"],
+      "enum": [
+        "default",
+        "dark"
+      ],
       "default": "default"
+    },
+    "hasNotch": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

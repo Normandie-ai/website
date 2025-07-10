@@ -4,6 +4,7 @@ import Card from "../shared/Card.astro";
 import gradientOverlayBlue from "@assets/gradient-blue.png";
 import gradientOverlayPurple from "@assets/gradient-purple.png";
 import { getImageUrl } from "@lib/imageUtils";
+import NotchArrow from "@components/shared/NotchArrow.astro";
 
 interface CardData {
 	title: string;
@@ -17,17 +18,20 @@ interface CardData {
 }
 
 interface Props {
+	zIndex: number;
 	cards: CardData[];
 	backgroundImage?: {
 		url: string;
 		alternativeText: string;
 	};
 	variant: "blue" | "purple";
+	hasNotch: boolean;
+	previousBlockHasNotch: boolean;
 }
 
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { cards, backgroundImage, variant } = Astro.props;
+const { zIndex, cards, backgroundImage, variant, hasNotch, previousBlockHasNotch } = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 const gradientOverlay = variant === "blue" ? gradientOverlayBlue : gradientOverlayPurple;
@@ -36,37 +40,63 @@ const hasMultipleCards = cards?.length > 1;
 const containerClass = hasMultipleCards 
   ? "grid grid-cols-1 lg:grid-cols-2 gap-12 items-start"
   : "flex justify-center";
+
+const sectionId = `cards-${zIndex}`;
 ---
 
-<section class="relative py-48 mx-auto overflow-hidden">
-	{imageUrl && (
+<section class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` style={{
+   zIndex: zIndex
+}}>
+	<div data-section-id={sectionId} class="relative w-full py-48 mx-auto">
+		{imageUrl && (
+			<Image 
+				src={imageUrl}
+				alt={backgroundImage?.alternativeText || "Background"}
+				class="absolute inset-0 w-full h-full object-cover -z-10 opacity-50"
+				width="1920"
+				height="1080"
+				loading="lazy"
+			/>
+		)}
 		<Image 
-			src={imageUrl}
-			alt={backgroundImage?.alternativeText || "Background"}
-			class="absolute inset-0 w-full h-full object-cover -z-10 opacity-50"
+			src={gradientOverlay}
+			alt=""
+			class="absolute inset-0 w-full h-full object-cover z-5 mix-blend-screen"
 			width="1920"
 			height="1080"
 			loading="lazy"
 		/>
-	)}
-	<Image 
-		src={gradientOverlay}
-		alt=""
-		class="absolute inset-0 w-full h-full object-cover z-5 mix-blend-screen"
-		width="1920"
-		height="1080"
-		loading="lazy"
-	/>
-	
-	<div class={`relative z-10 ${containerClass} max-w-screen-xl mx-auto px-16`}>
-		{cards && cards.map((card) => (
-			<Card
-				title={card.title}
-				subtitle={card.subtitle}
-				description={card.description}
-				icon={card.icon}
-				backgroundImage={card.backgroundImage}
+		
+		<div class={`relative z-10 ${containerClass} max-w-screen-xl mx-auto px-16`}>
+			{cards && cards.map((card) => (
+				<Card
+					title={card.title}
+					subtitle={card.subtitle}
+					description={card.description}
+					icon={card.icon}
+					backgroundImage={card.backgroundImage}
 			/>
-		))}
+			))}
+		</div>
+
+		{hasNotch && (
+			<NotchArrow color="#ffffff" />
+		)}
 	</div>
+
 </section>
+
+ 
+{hasNotch && (
+	<script define:vars={{ sectionId }}>
+		const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+		if (section) {
+		import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
+			applySectionClipPathWithBorder({
+			section,
+			borderColor: "#6336E4",
+			});
+		});
+		}
+	</script>
+)}

@@ -1,11 +1,27 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+:root {
+  --notch-height: 40px;
+  --notch-border-width: 10px;
+}
+
 @theme {
-    --animate-marquee: marquee 5s linear infinite;
-    @keyframes marquee {
-		0% { transform: translate3d(var(--move-initial), 0, 0) }
-        100% { transform: translate3d(var(--move-final), 0, 0) }
+  --animate-marquee: marquee 5s linear infinite;
+  @keyframes marquee {
+    0% {
+      transform: translate3d(var(--move-initial), 0, 0);
+    }
+    100% {
+      transform: translate3d(var(--move-final), 0, 0);
     }
   }
+}
 
+.mt-notch {
+  margin-top: calc(var(--notch-height) * -1);
+}
+
+.pb-notch {
+  padding-bottom: var(--notch-border-width);
+}

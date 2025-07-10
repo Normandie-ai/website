@@ -5,8 +5,10 @@ import { getImageUrl } from "@lib/imageUtils";
 import { marked } from "marked";
 
 import { Image } from "astro:assets";
+import NotchArrow from "@components/shared/NotchArrow.astro";
 
 interface Props {
+   zIndex: number;
 	title: string;
 	description: string;
 	backgroundImage: {
@@ -18,10 +20,13 @@ interface Props {
 		url: string;
 		target: "_blank" | "_self" | "_parent" | "_top";
 	};
+   hasNotch: boolean;
+   previousBlockHasNotch: boolean;
 }
+
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { title, description, backgroundImage, button } = Astro.props;
+const { zIndex, title, description, backgroundImage, button, hasNotch, previousBlockHasNotch } = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage.url, strapiUrl);
 // Configure marked to properly handle markdown
@@ -31,28 +36,57 @@ marked.setOptions({
 });
 
 const parsedContent = description ? marked.parse(description) : null;
+
+const sectionId = `hero-${zIndex}`;
+
 ---
-<section class="h-screen overflow-hidden relative flex flex-col items-center justify-center">
-   {imageUrl && (
-     <Image src={imageUrl}
-        alt=""
-        class="absolute inset-0 w-full h-full object-cover z-0"
-        width="1920"
-        height="1080"
-        loading="eager"
-     />
-   )}
-   <div class="max-w-screen-xl mx-auto flex flex-col items-start justify-center h-full w-full z-10 px-8">
-      <AvegaTitle title={title} />
-      <div class="text-white text-start mt-2 md:mt-6 text-md md:text-md max-w-3xl relative z-10">
-         <article set:html={parsedContent} />
-       </div>
-      {button && (<div class="mt-18">
-         <Button 
-            text={button.title}
-            target={button.target}
-            url={button.url}
+
+<section class=`overflow-hidden relative h-screen ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` style={{
+   zIndex: zIndex
+}}>
+   <div data-section-id={sectionId} class="h-full overflow-hidden relative flex flex-col items-center justify-center" >
+      {imageUrl && (
+         <Image src={imageUrl}
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover z-0"
+            width="1920"
+            height="1080"
+            loading="eager"
          />
-      </div>)}
+      )}
+      <div class="max-w-screen-xl mx-auto flex flex-col items-start justify-center h-full w-full z-10 px-8">
+         <AvegaTitle title={title} />
+         <div class="text-white text-start mt-2 md:mt-6 text-md md:text-md max-w-3xl relative z-10">
+            <article set:html={parsedContent} />
+         </div>
+         {button && (
+            <div class="mt-18">
+               <Button 
+                  text={button.title}
+                  target={button.target}
+                  url={button.url}
+               />
+            </div>
+         )}
+      </div>
+
+      {hasNotch && (
+         <NotchArrow color="#ffffff" />
+      )}
    </div>
 </section>
+
+
+{hasNotch && (
+   <script define:vars={{ sectionId }}>
+     const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+     if (section) {
+       import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
+         applySectionClipPathWithBorder({
+           section,
+           borderColor: "#6336E4",
+         });
+       });
+     }
+   </script>
+ )}
