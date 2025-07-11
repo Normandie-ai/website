@@ -1,20 +1,37 @@
 ---
+import { cn } from "@lib/cn";
 import { getLinkUrl } from "@lib/imageUtils";
+import { cva } from "class-variance-authority";
 
 interface Props {
-	text: string;
-	url: string;
-	target: "_blank" | "_self" | "_parent" | "_top";
+    variant?: "default" | "shadow" | "outline";
+    text: string;
+    url: string;
+    target: "_blank" | "_self" | "_parent" | "_top";
+    className?: string;
 }
 
-const { text, url, target } = Astro.props;
+const { text, url, target, variant = "default", className } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL;
 const href = getLinkUrl(url, baseUrl);
----
 
- <a href={href} target={target ?? '_self'} class="relative px-8 py-2.5 font-semibold text-white group">
-    <span class="absolute rounded-sm inset-0 w-full h-full transition duration-300 ease-out transform translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0"
-            style="background-color: rgba(255, 255, 255, 0.10);"></span>
-    <span class="absolute inset-0 w-full h-full border-1 rounded-sm border-white"></span>
-    <span class="relative">{text}</span>
+const buttonVariants = cva("px-8 py-2.5 rounded-md font-semibold inline-flex", {
+    variants: {
+        variant: {
+            default: "bg-[#725CFA] text-white hover:bg-[#725CFA]/90",
+            shadow: "border-1 border-white bg-transparent text-white relative after:content-[''] after:absolute after:inset-0 after:rounded-md after:translate-x-1 after:translate-y-1 after:bg-white/10 after:z-[-1] hover:after:translate-x-0 hover:after:translate-y-0 after:transition-all after:duration-300 after:ease-out",
+            outline: "border-1 border-white bg-transparent text-white relative hover:bg-white/10 transition-all duration-300 ease-out",
+        },
+    },
+    defaultVariants: {
+        variant: "default",
+    },
+});
+---
+<a
+  href={href}
+  target={target ?? "_self"}
+  class={cn(buttonVariants({ variant: variant }), className)}
+>
+  {text}
 </a>
