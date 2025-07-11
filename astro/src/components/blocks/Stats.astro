@@ -70,14 +70,6 @@ const currentLayout = gridLayouts[statsCount as keyof typeof gridLayouts] || gri
 
 const sectionId = `stats-${zIndex}`;
 ---
-
-<style>
-  .blur-circle {
-    background: #4863B7;
-    opacity: 0.7;
-  }
-</style>
-
 <section class={`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`} style={{
   zIndex: zIndex
 }}>

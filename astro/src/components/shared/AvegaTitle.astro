@@ -1,5 +1,6 @@
 ---
 import { hexToRgba } from "@lib/colorUtils";
+import { cn } from "@lib/cn";
 
 interface Props {
 	title: string;
@@ -27,7 +28,7 @@ const shadowColor = hexToRgba(color, 0.16);
 ---
 
 <Tag
-    class={`avega ${sizeClass} max-w-4xl mt-6 relative z-10 ${className}`}
+    class={cn("avega max-w-4xl mt-6 relative z-10", sizeClass, className)}
     style={{
 		"color": color,
         "text-shadow": `5px 5px 0px ${shadowColor}`,

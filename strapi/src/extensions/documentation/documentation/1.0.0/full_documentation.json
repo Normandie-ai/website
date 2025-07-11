@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-07-11T10:24:30.103Z"
+    "x-generation-date": "2025-07-11T13:01:31.880Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4789,6 +4789,9 @@
                     },
                     {
                       "$ref": "#/components/schemas/BlocksGridListComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BlocksTimelineComponent"
                     }
                   ]
                 },
@@ -4800,7 +4803,8 @@
                     "blocks.team": "#/components/schemas/BlocksTeamComponent",
                     "blocks.cards": "#/components/schemas/BlocksCardsComponent",
                     "blocks.stats": "#/components/schemas/BlocksStatsComponent",
-                    "blocks.grid-list": "#/components/schemas/BlocksGridListComponent"
+                    "blocks.grid-list": "#/components/schemas/BlocksGridListComponent",
+                    "blocks.timeline": "#/components/schemas/BlocksTimelineComponent"
                   }
                 }
               },
@@ -4893,6 +4897,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/BlocksGridListComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/BlocksTimelineComponent"
                 }
               ]
             },
@@ -4904,7 +4911,8 @@
                 "blocks.team": "#/components/schemas/BlocksTeamComponent",
                 "blocks.cards": "#/components/schemas/BlocksCardsComponent",
                 "blocks.stats": "#/components/schemas/BlocksStatsComponent",
-                "blocks.grid-list": "#/components/schemas/BlocksGridListComponent"
+                "blocks.grid-list": "#/components/schemas/BlocksGridListComponent",
+                "blocks.timeline": "#/components/schemas/BlocksTimelineComponent"
               }
             }
           },
@@ -4980,6 +4988,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/BlocksGridListComponent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/BlocksTimelineComponent"
                       }
                     ]
                   },
@@ -4991,7 +5002,8 @@
                       "blocks.team": "#/components/schemas/BlocksTeamComponent",
                       "blocks.cards": "#/components/schemas/BlocksCardsComponent",
                       "blocks.stats": "#/components/schemas/BlocksStatsComponent",
-                      "blocks.grid-list": "#/components/schemas/BlocksGridListComponent"
+                      "blocks.grid-list": "#/components/schemas/BlocksGridListComponent",
+                      "blocks.timeline": "#/components/schemas/BlocksTimelineComponent"
                     }
                   }
                 },
@@ -6008,6 +6020,35 @@
             "type": "string",
             "enum": [
               "blocks.grid-list"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "cards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComponentsCardComponent"
+            }
+          },
+          "hasNotch": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BlocksTimelineComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "__component": {
+            "type": "string",
+            "enum": [
+              "blocks.timeline"
             ]
           },
           "title": {
