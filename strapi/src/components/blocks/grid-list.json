@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_blocks_grid_lists",
+  "info": {
+    "displayName": "GridList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.card"
+    },
+    "hasNotch": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

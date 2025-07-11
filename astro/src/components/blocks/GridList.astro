@@ -1,0 +1,83 @@
+---
+import { marked } from "marked";
+import NotchArrow from "@components/shared/NotchArrow.astro";
+import AvegaTitle from "@components/shared/AvegaTitle.astro";
+import Card from "@components/shared/Card.astro";
+
+interface CardData {
+	title: string;
+	subtitle?: string;
+	description: string;
+	icon?: string;
+	backgroundImage?: {
+		url: string;
+		alternativeText: string;
+	};
+}
+
+interface Props {
+  zIndex: number;
+	title: string;
+  content: string;
+  cards: CardData[];
+  hasNotch: boolean;
+  previousBlockHasNotch: boolean;
+}
+
+
+const { zIndex, title, content, cards, hasNotch, previousBlockHasNotch } = Astro.props;
+
+// Configure marked to properly handle markdown
+marked.setOptions({
+  breaks: true,
+  gfm: true // GitHub Flavored Markdown
+});
+
+const parsedContent = content ? marked.parse(content) : null;
+
+const sectionId = `presentation-${zIndex}`;
+---
+<section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`>
+  <div data-section-id={sectionId} class=`relative bg-white`>
+    <div class="mx-auto max-w-screen-xl px-8 py-48">
+      {title && (
+        <AvegaTitle title={title} level={4} color="#725CFA" />
+      )}
+
+      <div class="mt-4 prose prose-strong:font-bold max-w-none">
+        <div set:html={parsedContent} />
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-12 items-start mt-10">
+        {cards.map((card) => (
+          <Card
+            title={card.title}
+            subtitle={card.subtitle}
+            description={card.description}
+            icon={card.icon}
+            backgroundImage={card.backgroundImage}
+          />
+        ))}
+      </div>
+    </div>
+
+    {hasNotch && (
+      <NotchArrow color={"#7666FC"} />
+   )}
+  </div>
+</section>
+
+
+{hasNotch && (
+  <script define:vars={{ sectionId }}>
+    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+    if (section) {
+      import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
+        applySectionClipPathWithBorder({
+          section,
+          borderColor: "#ffffff",
+        });
+      });
+    }
+  </script>
+)}
