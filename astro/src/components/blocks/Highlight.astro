@@ -1,0 +1,74 @@
+---
+import Button from "@components/shared/Button.astro";
+import NotchArrow from "@components/shared/NotchArrow.astro";
+import { cn } from "@lib/cn";
+import { configureMarkdown, parseMarkdown } from "@lib/markdown";
+import AvegaTitle from "../shared/AvegaTitle.astro";
+
+interface Props {
+    zIndex: number;
+    title: string;
+    content: string;
+    ctaText?: string;
+    ctaLink?: string;
+    splineURL?: string;
+    hasNotch: boolean;
+    previousBlockHasNotch: boolean;
+}
+
+const { zIndex, title, content, splineURL, ctaText, ctaLink, hasNotch, previousBlockHasNotch } = Astro.props;
+
+// Configure marked for markdown parsing
+configureMarkdown();
+
+const parsedContent = parseMarkdown(content);
+
+const sectionId = `highlight-${zIndex}`;
+---
+<section class={cn("relative overflow-hidden", hasNotch && 'pb-notch', previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`}>
+  <div data-section-id={sectionId} class="relative bg-white">
+
+    <div class="mx-auto max-w-screen-xl px-16 py-48 relative z-10 flex flex-col lg:flex-row-reverse justify-center items-center gap-32">
+        <div class="max-w-lg md:max-w-none">
+            {title && (
+                <AvegaTitle title={title} level={4} color="#725CFA" />
+            )}
+
+            <div class="mt-4 prose prose-strong:font-bold max-w-none" set:html={parsedContent}></div>
+
+            {ctaText && (
+                <Button 
+                    text={ctaText}
+                    target={ctaLink ? "_blank" : "_self"}
+                    url={ctaLink ?? ""}
+                    className="mt-10"
+                />
+            )}
+        </div>
+
+        {splineURL && (
+            <div class="max-w-sm w-full shrink-0">
+                <iframe src={splineURL} class="w-full aspect-square rounded-full"></iframe>
+            </div>
+        )}
+    </div>
+
+    {hasNotch && (
+      <NotchArrow color="#9A89FD" />
+   )}
+  </div>
+</section> 
+
+{hasNotch && (
+	<script define:vars={{ sectionId }}>
+		const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+		if (section) {
+		import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
+			applySectionClipPathWithBorder({
+			section,
+			borderColor: "#1B1C5D",
+			});
+		});
+		}
+	</script>
+)}
