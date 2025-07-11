@@ -22,7 +22,8 @@
         "blocks.team",
         "blocks.cards",
         "blocks.stats",
-        "blocks.grid-list"
+        "blocks.grid-list",
+        "blocks.timeline"
       ]
     }
   }

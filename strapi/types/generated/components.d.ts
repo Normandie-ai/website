@@ -97,6 +97,20 @@ export interface BlocksTeam extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksTimeline extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_timelines';
+  info: {
+    description: '';
+    displayName: 'Timeline';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'components.card', true>;
+    content: Schema.Attribute.RichText;
+    hasNotch: Schema.Attribute.Boolean;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ComponentsCard extends Struct.ComponentSchema {
   collectionName: 'components_components_cards';
   info: {
@@ -138,6 +152,7 @@ declare module '@strapi/strapi' {
       'blocks.hero': BlocksHero;
       'blocks.stats': BlocksStats;
       'blocks.team': BlocksTeam;
+      'blocks.timeline': BlocksTimeline;
       'components.card': ComponentsCard;
       'components.link': ComponentsLink;
     }
