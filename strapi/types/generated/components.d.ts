@@ -64,6 +64,22 @@ export interface BlocksHero extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksHighlight extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_highlights';
+  info: {
+    description: '';
+    displayName: 'Highlight';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    ctaLink: Schema.Attribute.String;
+    ctaText: Schema.Attribute.String;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    splineURL: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksStats extends Struct.ComponentSchema {
   collectionName: 'components_blocks_stats';
   info: {
@@ -150,6 +166,7 @@ declare module '@strapi/strapi' {
       'blocks.features': BlocksFeatures;
       'blocks.grid-list': BlocksGridList;
       'blocks.hero': BlocksHero;
+      'blocks.highlight': BlocksHighlight;
       'blocks.stats': BlocksStats;
       'blocks.team': BlocksTeam;
       'blocks.timeline': BlocksTimeline;
