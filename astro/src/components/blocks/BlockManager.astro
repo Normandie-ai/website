@@ -5,6 +5,8 @@ import Team from "./Team.astro";
 import Cards from "./Cards.astro";
 import Stats from "./Stats.astro";
 import GridList from "./GridList.astro";
+import Timeline from "./Timeline.astro";
+
 interface Block {
 	__component: string;
 	id: number;
@@ -25,6 +27,7 @@ const componentMap: Record<string, any> = {
 	"blocks.cards": Cards,
 	"blocks.stats": Stats,
 	"blocks.grid-list": GridList,
+	"blocks.timeline": Timeline,
 };
 ---
 
