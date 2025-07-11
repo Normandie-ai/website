@@ -25,3 +25,8 @@
 .pb-notch {
   padding-bottom: var(--notch-border-width);
 }
+
+.blur-circle {
+  background: #4863b7;
+  opacity: 0.7;
+}
