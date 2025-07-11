@@ -21,7 +21,8 @@
         "blocks.features",
         "blocks.team",
         "blocks.cards",
-        "blocks.stats"
+        "blocks.stats",
+        "blocks.grid-list"
       ]
     }
   }

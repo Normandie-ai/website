@@ -32,6 +32,20 @@ export interface BlocksFeatures extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksGridList extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_grid_lists';
+  info: {
+    description: '';
+    displayName: 'GridList';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'components.card', true>;
+    content: Schema.Attribute.RichText;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksHero extends Struct.ComponentSchema {
   collectionName: 'components_heroes';
   info: {
@@ -120,6 +134,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'blocks.cards': BlocksCards;
       'blocks.features': BlocksFeatures;
+      'blocks.grid-list': BlocksGridList;
       'blocks.hero': BlocksHero;
       'blocks.stats': BlocksStats;
       'blocks.team': BlocksTeam;
