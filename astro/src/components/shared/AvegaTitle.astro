@@ -1,11 +1,14 @@
 ---
+import { hexToRgba } from "@lib/colorUtils";
+
 interface Props {
 	title: string;
 	level?: 1 | 2 | 3 | 4 | 5 | 6;
+	color?: string;
 	className?: string;
 }
 
-const { title, level = 1, className } = Astro.props;
+const { title, level = 1, className, color = "#ffffff" } = Astro.props;
 const Tag = `h${level}` as keyof HTMLElementTagNameMap;
 
 // Define text sizes based on heading level
@@ -19,10 +22,16 @@ const textSizeClasses = {
 };
 
 const sizeClass = textSizeClasses[level];
+
+const shadowColor = hexToRgba(color, 0.16);
 ---
 
 <Tag
-    class={`avega ${sizeClass} text-white max-w-4xl mt-6 relative z-10 ${className}`}
-    style="text-shadow: 5px 5px 0px rgba(255, 255, 255, 0.15);">
+    class={`avega ${sizeClass} max-w-4xl mt-6 relative z-10 ${className}`}
+    style={{
+		"color": color,
+        "text-shadow": `5px 5px 0px ${shadowColor}`,
+    }}
+>
     <Fragment set:html={title} />
 </Tag>
