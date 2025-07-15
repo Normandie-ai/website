@@ -111,6 +111,7 @@ export interface BlocksTeam extends Struct.ComponentSchema {
     cardImage: Schema.Attribute.Media<'images' | 'files'>;
     cardTitle: Schema.Attribute.String;
     description: Schema.Attribute.String;
+    hasNotch: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     title: Schema.Attribute.String;
   };
 }

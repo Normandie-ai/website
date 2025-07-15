@@ -27,6 +27,10 @@
     },
     "cardContent": {
       "type": "richtext"
+    },
+    "hasNotch": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
