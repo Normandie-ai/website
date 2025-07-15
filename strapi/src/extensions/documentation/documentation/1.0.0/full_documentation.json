@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-07-11T21:50:12.713Z"
+    "x-generation-date": "2025-07-15T13:45:01.169Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -2851,6 +2851,12 @@
                 ],
                 "example": "string or id"
               },
+              "job": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
               "locale": {
                 "type": "string"
               },
@@ -3520,6 +3526,12 @@
               }
             }
           },
+          "job": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -3702,6 +3714,12 @@
                       }
                     }
                   }
+                },
+                "job": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",
@@ -5546,7 +5564,7 @@
           "description": {
             "type": "string"
           },
-          "backgroundImage": {
+          "cardImage": {
             "type": "object",
             "properties": {
               "id": {
@@ -5674,6 +5692,12 @@
                 }
               }
             }
+          },
+          "cardTitle": {
+            "type": "string"
+          },
+          "cardContent": {
+            "type": "string"
           }
         }
       },

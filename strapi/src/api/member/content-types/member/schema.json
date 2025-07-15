@@ -25,6 +25,12 @@
         "images",
         "files"
       ]
+    },
+    "job": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
     }
   }
 }

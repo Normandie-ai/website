@@ -107,7 +107,9 @@ export interface BlocksTeam extends Struct.ComponentSchema {
     icon: 'apps';
   };
   attributes: {
-    backgroundImage: Schema.Attribute.Media<'images' | 'files'>;
+    cardContent: Schema.Attribute.RichText;
+    cardImage: Schema.Attribute.Media<'images' | 'files'>;
+    cardTitle: Schema.Attribute.String;
     description: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
