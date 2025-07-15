@@ -1,69 +1,70 @@
 ---
+import Button from "@components/shared/Button.astro";
+import NotchArrow from "@components/shared/NotchArrow.astro";
+import { marked } from "marked";
 import AvegaTitle from "../shared/AvegaTitle.astro";
 import StatCard from "../shared/StatCard.astro";
-import { marked } from 'marked';
-import NotchArrow from "@components/shared/NotchArrow.astro";
 
 interface StatCardData {
-  icon: string;
-  title: string;
-  subtitle?: string;
+    icon: string;
+    title: string;
+    subtitle?: string;
 }
 
 interface Props {
-  zIndex: number;
-  title: string;
-  content: string;
-  stats: StatCardData[];
-  ctaText?: string;
-  ctaLink?: string;
-  variant?: "default" | "dark";
-  hasNotch: boolean;
-  previousBlockHasNotch: boolean;
+    zIndex: number;
+    title: string;
+    content: string;
+    stats: StatCardData[];
+    ctaText?: string;
+    ctaLink?: string;
+    variant?: "default" | "dark";
+    hasNotch: boolean;
+    previousBlockHasNotch: boolean;
 }
 
 const { zIndex, title, content, stats = [], ctaText, ctaLink, variant = "dark", hasNotch, previousBlockHasNotch } = Astro.props;
 
 // Configure marked for markdown parsing
 marked.setOptions({
-  breaks: true,
-  gfm: true
+    breaks: true,
+    gfm: true,
 });
 
 const parsedContent = content ? marked.parse(content) : null;
-const sectionStyle = variant === "dark" ? `background-color: #191958` : 'white';
+const sectionStyle = variant === "dark" ? "background-color: #191958" : "white";
 const statsCount = stats?.length || 0;
 
 // Define grid layout configurations
 const gridLayouts = {
-  1: { 
-    container: "grid grid-cols-1 gap-4 mb-8 max-w-md mx-auto",
-    pattern: [1]
-  },
-  2: { 
-    container: "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 max-w-2xl mx-auto",
-    pattern: [1, 1]
-  },
-  3: { 
-    container: "grid grid-cols-3 gap-4 mb-8",
-    pattern: [2, 1, 3] // 2-1-3 pattern
-  },
-  4: { 
-    container: "grid grid-cols-3 gap-4 mb-8",
-    pattern: [2, 1, 1, 2] // 2-1-1-2 pattern
-  },
-  5: { 
-    container: "grid grid-cols-3 gap-4 mb-8",
-    pattern: [2, 1, 1, 1, 2] // 2-1-1-1-2 pattern
-  },
-  6: { 
-    container: "grid grid-cols-3 gap-4 mb-8",
-    pattern: [2, 1, 1, 2, 2, 1] // 2-1-1-2-2-1 pattern
-  },
-  default: { 
-    container: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8",
-    pattern: []
-  }
+    1: {
+        container: "grid grid-cols-1 gap-4 mb-8 max-w-md mx-auto",
+        pattern: [1],
+    },
+    2: {
+        container: "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 max-w-2xl mx-auto",
+        pattern: [1, 1],
+    },
+    3: {
+        container: "grid grid-cols-3 gap-4 mb-8",
+        pattern: [2, 1, 3], // 2-1-3 pattern
+    },
+    4: {
+        container: "grid grid-cols-3 gap-4 mb-8",
+        pattern: [2, 1, 1, 2], // 2-1-1-2 pattern
+    },
+    5: {
+        container: "grid grid-cols-3 gap-4 mb-8",
+        pattern: [2, 1, 1, 1, 2], // 2-1-1-1-2 pattern
+    },
+    6: {
+        container: "grid grid-cols-3 gap-4 mb-8",
+        pattern: [2, 1, 1, 2, 2, 1], // 2-1-1-2-2-1 pattern
+    },
+    default: {
+        container: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8",
+        pattern: [],
+    },
 };
 
 const currentLayout = gridLayouts[statsCount as keyof typeof gridLayouts] || gridLayouts.default;
@@ -114,13 +115,16 @@ const sectionId = `stats-${zIndex}`;
             </div>
 
             {ctaText && (
+
               <div class="flex items-center gap-4">
-                <a 
-                  href={ctaLink || "#"} 
-                  class="inline-flex items-center px-6 py-3 bg-white text-[#191958] rounded-full font-semibold hover:bg-opacity-90 transition-all"
-                >
-                  {ctaText}
-                </a>
+                <Button 
+                  variant="outline"
+                  text={ctaText}
+                  target={ctaLink ? "_blank" : "_self"}
+                  url={ctaLink ?? ""}
+                />
+
+            
                 <a 
                   href="https://linkedin.com" 
                   target="_blank" 

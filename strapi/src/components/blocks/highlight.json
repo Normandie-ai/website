@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_blocks_highlights",
+  "info": {
+    "displayName": "Highlight",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "splineURL": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "ctaText": {
+      "type": "string"
+    },
+    "ctaLink": {
+      "type": "string"
+    },
+    "hasNotch": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

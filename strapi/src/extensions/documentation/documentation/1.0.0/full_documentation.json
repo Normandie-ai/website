@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-07-11T13:01:31.880Z"
+    "x-generation-date": "2025-07-11T21:50:12.713Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -4792,6 +4792,9 @@
                     },
                     {
                       "$ref": "#/components/schemas/BlocksTimelineComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BlocksHighlightComponent"
                     }
                   ]
                 },
@@ -4804,7 +4807,8 @@
                     "blocks.cards": "#/components/schemas/BlocksCardsComponent",
                     "blocks.stats": "#/components/schemas/BlocksStatsComponent",
                     "blocks.grid-list": "#/components/schemas/BlocksGridListComponent",
-                    "blocks.timeline": "#/components/schemas/BlocksTimelineComponent"
+                    "blocks.timeline": "#/components/schemas/BlocksTimelineComponent",
+                    "blocks.highlight": "#/components/schemas/BlocksHighlightComponent"
                   }
                 }
               },
@@ -4900,6 +4904,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/BlocksTimelineComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/BlocksHighlightComponent"
                 }
               ]
             },
@@ -4912,7 +4919,8 @@
                 "blocks.cards": "#/components/schemas/BlocksCardsComponent",
                 "blocks.stats": "#/components/schemas/BlocksStatsComponent",
                 "blocks.grid-list": "#/components/schemas/BlocksGridListComponent",
-                "blocks.timeline": "#/components/schemas/BlocksTimelineComponent"
+                "blocks.timeline": "#/components/schemas/BlocksTimelineComponent",
+                "blocks.highlight": "#/components/schemas/BlocksHighlightComponent"
               }
             }
           },
@@ -4991,6 +4999,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/BlocksTimelineComponent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/BlocksHighlightComponent"
                       }
                     ]
                   },
@@ -5003,7 +5014,8 @@
                       "blocks.cards": "#/components/schemas/BlocksCardsComponent",
                       "blocks.stats": "#/components/schemas/BlocksStatsComponent",
                       "blocks.grid-list": "#/components/schemas/BlocksGridListComponent",
-                      "blocks.timeline": "#/components/schemas/BlocksTimelineComponent"
+                      "blocks.timeline": "#/components/schemas/BlocksTimelineComponent",
+                      "blocks.highlight": "#/components/schemas/BlocksHighlightComponent"
                     }
                   }
                 },
@@ -6062,6 +6074,38 @@
             "items": {
               "$ref": "#/components/schemas/ComponentsCardComponent"
             }
+          },
+          "hasNotch": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BlocksHighlightComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "__component": {
+            "type": "string",
+            "enum": [
+              "blocks.highlight"
+            ]
+          },
+          "splineURL": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "ctaText": {
+            "type": "string"
+          },
+          "ctaLink": {
+            "type": "string"
           },
           "hasNotch": {
             "type": "boolean"

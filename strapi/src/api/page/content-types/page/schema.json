@@ -23,7 +23,8 @@
         "blocks.cards",
         "blocks.stats",
         "blocks.grid-list",
-        "blocks.timeline"
+        "blocks.timeline",
+        "blocks.highlight"
       ]
     }
   }

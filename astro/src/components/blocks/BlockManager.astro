@@ -6,6 +6,7 @@ import Cards from "./Cards.astro";
 import Stats from "./Stats.astro";
 import GridList from "./GridList.astro";
 import Timeline from "./Timeline.astro";
+import Highlight from "./Highlight.astro";
 
 interface Block {
 	__component: string;
@@ -28,6 +29,7 @@ const componentMap: Record<string, any> = {
 	"blocks.stats": Stats,
 	"blocks.grid-list": GridList,
 	"blocks.timeline": Timeline,
+	"blocks.highlight": Highlight,
 };
 ---
 

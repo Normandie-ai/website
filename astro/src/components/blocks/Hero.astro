@@ -8,20 +8,20 @@ import { Image } from "astro:assets";
 import NotchArrow from "@components/shared/NotchArrow.astro";
 
 interface Props {
-   zIndex: number;
-	title: string;
-	description: string;
-	backgroundImage: {
-		url: string;
-		alternativeText: string;
-	};
-	button: {
-		title: string;
-		url: string;
-		target: "_blank" | "_self" | "_parent" | "_top";
-	};
-   hasNotch: boolean;
-   previousBlockHasNotch: boolean;
+    zIndex: number;
+    title: string;
+    description: string;
+    backgroundImage: {
+        url: string;
+        alternativeText: string;
+    };
+    button: {
+        title: string;
+        url: string;
+        target: "_blank" | "_self" | "_parent" | "_top";
+    };
+    hasNotch: boolean;
+    previousBlockHasNotch: boolean;
 }
 
 const strapiUrl = import.meta.env.STRAPI_URL;
@@ -31,14 +31,13 @@ const { zIndex, title, description, backgroundImage, button, hasNotch, previousB
 const imageUrl = getImageUrl(backgroundImage.url, strapiUrl);
 // Configure marked to properly handle markdown
 marked.setOptions({
-  breaks: true,
-  gfm: true // GitHub Flavored Markdown
+    breaks: true,
+    gfm: true, // GitHub Flavored Markdown
 });
 
 const parsedContent = description ? marked.parse(description) : null;
 
 const sectionId = `hero-${zIndex}`;
-
 ---
 
 <section class=`overflow-hidden relative h-screen ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` style={{
@@ -62,6 +61,7 @@ const sectionId = `hero-${zIndex}`;
          {button && (
             <div class="mt-18">
                <Button 
+                  variant="shadow"
                   text={button.title}
                   target={button.target}
                   url={button.url}
