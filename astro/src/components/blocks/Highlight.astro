@@ -27,8 +27,7 @@ const sectionId = `highlight-${zIndex}`;
 ---
 <section class={cn("relative overflow-hidden", hasNotch && 'pb-notch', previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`}>
   <div data-section-id={sectionId} class="relative bg-white">
-
-    <div class="mx-auto max-w-screen-xl px-16 py-48 relative z-10 flex flex-col lg:flex-row-reverse justify-center items-center gap-32">
+    <div class="mx-auto max-w-screen-xl px-8 sm:px-16 py-48 relative z-10 flex flex-col lg:flex-row-reverse justify-center items-center gap-32">
         <div class="max-w-lg md:max-w-none">
             {title && (
                 <AvegaTitle title={title} level={4} color="#725CFA" />
