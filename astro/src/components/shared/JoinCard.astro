@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import AvegaTitle from "./AvegaTitle.astro";
+
+interface JoinCardProps {
+  cardImage: string;
+  cardTitle: string;
+  cardContent: string;
+}
+
+const { cardImage, cardTitle, cardContent } = Astro.props as JoinCardProps;
+---
+<div class="p-4 py-6 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#725CFA]">
+    {cardImage && (
+        <Image
+            src={cardImage}
+            alt={cardTitle}
+            width="1920"
+            height="1080"
+            class="object-cover rounded-full h-24 w-auto aspect-square"
+        />
+    )}
+
+    <AvegaTitle title={"Rejoingnez l’asso"} color="#725CFA" level={5} className="text-center mt-0" />
+
+    <p class="text-[#725CFA]/50 text-center font-bold">{cardTitle}</p>
+    <div class="text-gray-600 text-center text-sm [&_a]:font-bold" set:html={cardContent} />
+</div>
+
