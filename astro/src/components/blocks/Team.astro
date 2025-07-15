@@ -1,15 +1,25 @@
 ---
-import { Image } from "astro:assets";
 import fetchApi from "@lib/strapi";
 import TeamMember from "../shared/TeamMember.astro";
+import AvegaTitle from "../shared/AvegaTitle.astro";
+import JoinCard from "../shared/JoinCard.astro";
+import { getImageUrl } from "@lib/imageUtils";
+import { configureMarkdown, parseMarkdown } from "@lib/markdown";
+import { cn } from "@lib/cn";
+import NotchArrow from "../shared/NotchArrow.astro";
 
 interface TeamProps {
+  zIndex: number;
 	title: string;
 	description: string;
-	backgroundImage: {
-		url: string;
-		alternativeText: string;
-	};
+  cardImage: {
+    url: string;
+    alternativeText: string;
+  };
+  cardTitle: string;
+  cardContent: string;
+  hasNotch: boolean;
+  previousBlockHasNotch: boolean;
 }
 
 interface Member {
@@ -19,6 +29,8 @@ interface Member {
 		url: string;
 		alternativeText: string;
 	};
+	role: string;
+  job: string;
 }
 
 const members: Member[] = await fetchApi({
@@ -28,29 +40,48 @@ const members: Member[] = await fetchApi({
 
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { title, description, backgroundImage } = Astro.props as TeamProps;
+const { zIndex, title, description, cardImage, cardTitle, cardContent, hasNotch, previousBlockHasNotch } = Astro.props as TeamProps;
 
-const imageUrl = backgroundImage ? strapiUrl + backgroundImage.url : null;
+configureMarkdown();
+
+const parsedContent = parseMarkdown(cardContent);
+
+const cardImageUrl = getImageUrl(cardImage?.url, strapiUrl);
+
+const sectionId = `team-${zIndex}`;
 ---
-<section class="text-gray-600 body-font">
-    {imageUrl && (
-      <Image src={imageUrl}
-        alt=""
-        class="fixed inset-0 w-full h-full object-cover -z-10"
-        width="1920"
-        height="1080"
-      />
-    )}
+<section class={cn("relative overflow-hidden text-gray-600 body-font", hasNotch && "pb-notch", previousBlockHasNotch && "mt-notch")} style={`z-index: ${zIndex}`}>
+  <div data-section-id={sectionId} class="relative bg-white">
     <div class="max-w-screen-xl mx-auto px-8 py-24">
-        <div class="flex flex-col text-center w-full mb-20">
-          <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">{title}</h1>
-          <p class="lg:w-2/3 mx-auto leading-relaxed text-base">{description}</p>
-        </div>
-        <div class="flex flex-wrap -m-2">
-          
-          {members?.map((member) => {
-            return <TeamMember firstName={member.firstName} lastName={member.lastName} avatar={member.avatar} />;
-          })}
-        </div>
+      <div class="mb-20">
+        <AvegaTitle title={title} color="#725CFA" level={4} />
+        <div class="leading-relaxed text-base mt-5" set:html={description} />
+      </div>
+
+      <div class="sm:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {members?.map((member) => {
+          return <TeamMember firstName={member.firstName} lastName={member.lastName} avatar={member.avatar} role={member.role} job={member.job} />;
+        })}
+        <JoinCard cardImage={cardImageUrl} cardTitle={cardTitle} cardContent={parsedContent} />
+      </div>
     </div>
+
+    {hasNotch && (
+      <NotchArrow color={"#ff00ff"} />
+    )}
+  </div>
 </section>
+
+{hasNotch && (
+  <script define:vars={{ sectionId }}>
+    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+    if (section) {
+      import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
+        applySectionClipPathWithBorder({
+          section,
+          borderColor: "#ff00ff",
+        });
+      });
+    }
+  </script>
+)}

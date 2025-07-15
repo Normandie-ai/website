@@ -13,13 +13,24 @@
     "description": {
       "type": "string"
     },
-    "backgroundImage": {
+    "cardImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "cardTitle": {
+      "type": "string"
+    },
+    "cardContent": {
+      "type": "richtext"
+    },
+    "hasNotch": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
