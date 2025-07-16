@@ -51,7 +51,7 @@ const cardImageUrl = getImageUrl(cardImage?.url, strapiUrl);
 const sectionId = `team-${zIndex}`;
 ---
 <section class={cn("relative overflow-hidden text-gray-600 body-font", hasNotch && "pb-notch", previousBlockHasNotch && "mt-notch")} style={`z-index: ${zIndex}`}>
-  <div data-section-id={sectionId} class="relative bg-white">
+  <div data-section-id={sectionId} class={`relative bg-white`} data-notch-border-color={hasNotch ? '#ff00ff' : undefined}>
     <div class="max-w-screen-xl mx-auto px-8 py-24">
       <div class="mb-20">
         <AvegaTitle title={title} color="#725CFA" level={4} />
@@ -71,17 +71,3 @@ const sectionId = `team-${zIndex}`;
     )}
   </div>
 </section>
-
-{hasNotch && (
-  <script define:vars={{ sectionId }}>
-    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
-    if (section) {
-      import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
-        applySectionClipPathWithBorder({
-          section,
-          borderColor: "#ff00ff",
-        });
-      });
-    }
-  </script>
-)}

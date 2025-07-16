@@ -26,7 +26,7 @@ const parsedContent = parseMarkdown(content);
 const sectionId = `highlight-${zIndex}`;
 ---
 <section class={cn("relative overflow-hidden", hasNotch && 'pb-notch', previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`}>
-  <div data-section-id={sectionId} class="relative bg-white">
+  <div data-section-id={sectionId} class={`relative bg-white`} data-notch-border-color={hasNotch ? '#1B1C5D' : undefined}>
     <div class="mx-auto max-w-screen-xl px-8 sm:px-16 py-48 relative z-10 flex flex-col lg:flex-row-reverse justify-center items-center gap-32">
         <div class="max-w-lg md:max-w-none">
             {title && (
@@ -56,18 +56,4 @@ const sectionId = `highlight-${zIndex}`;
       <NotchArrow color="#9A89FD" />
    )}
   </div>
-</section> 
-
-{hasNotch && (
-	<script define:vars={{ sectionId }}>
-		const section = document.querySelector(`[data-section-id="${sectionId}"]`);
-		if (section) {
-		import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
-			applySectionClipPathWithBorder({
-			section,
-			borderColor: "#1B1C5D",
-			});
-		});
-		}
-	</script>
-)}
+</section>

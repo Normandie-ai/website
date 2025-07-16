@@ -38,7 +38,7 @@ const parsedContent = content ? marked.parse(content) : null;
 const sectionId = `presentation-${zIndex}`;
 ---
 <section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`>
-  <div data-section-id={sectionId} class=`relative bg-white`>
+  <div data-section-id={sectionId} class={`relative bg-white`} data-notch-border-color={hasNotch ? '#7666FC' : undefined}>
     <div class="mx-auto max-w-screen-xl px-8 py-48">
       {title && (
         <AvegaTitle title={title} level={4} color="#725CFA" />
@@ -66,18 +66,3 @@ const sectionId = `presentation-${zIndex}`;
    )}
   </div>
 </section>
-
-
-{hasNotch && (
-  <script define:vars={{ sectionId }}>
-    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
-    if (section) {
-      import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
-        applySectionClipPathWithBorder({
-          section,
-          borderColor: "#ffffff",
-        });
-      });
-    }
-  </script>
-)}

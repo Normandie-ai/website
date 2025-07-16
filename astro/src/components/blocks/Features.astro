@@ -74,7 +74,7 @@ const sectionId = `features-${zIndex}`;
 
 
 <section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`>
-  <div data-section-id={sectionId} class=`relative mx-auto` style={sectionStyle}>
+  <div data-section-id={sectionId} class={`relative mx-auto`} style={sectionStyle} data-notch-border-color={hasNotch ? variantColor : undefined}>
     <!-- Decorative blurred circles - only show for dark variant -->
     {variant === "dark" && (
       <>
@@ -236,21 +236,6 @@ const sectionId = `features-${zIndex}`;
 
     {hasNotch && (
       <NotchArrow color={arrowColor} />
-   )}
+    )}
   </div>
 </section>
-
-
-{hasNotch && (
-  <script define:vars={{ sectionId, variantColor }}>
-    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
-    if (section) {
-      import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
-        applySectionClipPathWithBorder({
-          section,
-          borderColor: variantColor,
-        });
-      });
-    }
-  </script>
-)}

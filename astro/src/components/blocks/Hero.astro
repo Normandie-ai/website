@@ -43,7 +43,7 @@ const sectionId = `hero-${zIndex}`;
 <section class=`overflow-hidden relative h-screen ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` style={{
    zIndex: zIndex
 }}>
-   <div data-section-id={sectionId} class="h-full overflow-hidden relative flex flex-col items-center justify-center" >
+   <div data-section-id={sectionId} class={`h-full overflow-hidden relative flex flex-col items-center justify-center`} data-notch-border-color={hasNotch ? '#6336E4' : undefined}>
       {imageUrl && (
          <Image src={imageUrl}
             alt=""
@@ -76,17 +76,3 @@ const sectionId = `hero-${zIndex}`;
    </div>
 </section>
 
-
-{hasNotch && (
-   <script define:vars={{ sectionId }}>
-     const section = document.querySelector(`[data-section-id="${sectionId}"]`);
-     if (section) {
-       import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
-         applySectionClipPathWithBorder({
-           section,
-           borderColor: "#6336E4",
-         });
-       });
-     }
-   </script>
- )}
