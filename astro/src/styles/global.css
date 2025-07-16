@@ -30,3 +30,11 @@
   background: #4863b7;
   opacity: 0.7;
 }
+
+.ticket-shape {
+  clip-path: none;
+
+  @media (min-width: 40rem) {
+    clip-path: url(#ticket-shape);
+  }
+}
