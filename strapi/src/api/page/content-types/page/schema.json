@@ -24,7 +24,8 @@
         "blocks.stats",
         "blocks.grid-list",
         "blocks.timeline",
-        "blocks.highlight"
+        "blocks.highlight",
+        "blocks.banner"
       ]
     }
   }

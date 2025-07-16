@@ -455,6 +455,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.grid-list',
         'blocks.timeline',
         'blocks.highlight',
+        'blocks.banner',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

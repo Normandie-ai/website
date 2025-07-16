@@ -1,5 +1,19 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlocksBanner extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_banners';
+  info: {
+    description: '';
+    displayName: 'Banner';
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'files' | 'images'>;
+    cards: Schema.Attribute.Component<'components.card', true>;
+    content: Schema.Attribute.RichText;
+    logo: Schema.Attribute.Media<'images' | 'files'>;
+  };
+}
+
 export interface BlocksCards extends Struct.ComponentSchema {
   collectionName: 'components_blocks_cards';
   info: {
@@ -165,6 +179,7 @@ export interface ComponentsLink extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'blocks.banner': BlocksBanner;
       'blocks.cards': BlocksCards;
       'blocks.features': BlocksFeatures;
       'blocks.grid-list': BlocksGridList;
