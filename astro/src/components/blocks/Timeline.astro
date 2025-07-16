@@ -37,7 +37,7 @@ const parsedContent = parseMarkdown(content);
 const sectionId = `timeline-${zIndex}`;
 ---
 <section class={cn("relative overflow-hidden", hasNotch && 'pb-notch', previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`}>
-  <div data-section-id={sectionId} class="relative bg-[#191958]">
+  <div data-section-id={sectionId} class={`relative bg-[#191958]`} data-notch-border-color={hasNotch ? '#ffffff' : undefined}>
     <div class="absolute top-0 left-24 w-[32rem] h-[32rem] rounded-full filter blur-3xl blur-circle"></div>
 
     <div class="relative mx-auto max-w-screen-xl px-8 py-48">
@@ -81,17 +81,3 @@ const sectionId = `timeline-${zIndex}`;
   </div>
 </section>
 
-
-{hasNotch && (
-  <script define:vars={{ sectionId }}>
-    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
-    if (section) {
-      import('/src/lib/clipPath').then(({ applySectionClipPathWithBorder }) => {
-        applySectionClipPathWithBorder({
-          section,
-          borderColor: "#ffffff",
-        });
-      });
-    }
-  </script>
-)}
