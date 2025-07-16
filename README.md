@@ -1,6 +1,7 @@
 # Normandie AI Website
 
 A modern, full-stack website built with Astro.js frontend and Strapi CMS backend for the Normandie AI initiative.
+<img width="1512" height="823" alt="Capture d’écran 2025-07-16 à 23 44 28" src="https://github.com/user-attachments/assets/5ab4e6a9-9156-4fed-ab6c-c7cda9bb14d9" />
 
 ## 🏗️ Project Structure
 
