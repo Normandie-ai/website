@@ -1,0 +1,124 @@
+---
+import { cn } from "@lib/cn";
+import { configureMarkdown, parseMarkdown } from "@lib/markdown";
+import { getImageUrl } from "@lib/imageUtils";
+import { Image } from "astro:assets";
+import Card from "../shared/Card.astro";
+
+interface CardData {
+	title: string;
+	subtitle?: string;
+	description: string;
+	icon?: string;
+	backgroundImage?: {
+		url: string;
+		alternativeText: string;
+	};
+}
+
+interface Props {
+    zIndex: number;
+    logo: {
+        url: string;
+        alternativeText: string;
+    };
+    backgroundImage: {
+        url: string;
+        alternativeText: string;
+    };
+    content: string;
+    cards: CardData[];
+    previousBlockHasNotch: boolean;
+}
+
+const { zIndex, logo, backgroundImage, content, cards, previousBlockHasNotch } = Astro.props;
+
+const strapiUrl = import.meta.env.STRAPI_URL;
+
+// Configure marked for markdown parsing
+configureMarkdown();
+
+const parsedContent = parseMarkdown(content);
+
+const logoUrl = getImageUrl(logo?.url, strapiUrl);
+const backgroundImageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
+
+const sectionId = `banner-${zIndex}`;
+---
+<section class={cn("relative overflow-hidden", previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`}>
+    <div class="mx-auto max-w-screen-xl sm:px-8 sm:py-8 relative z-10">
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="0"
+        height="0"
+        viewBox="0 0 300 200"
+      >
+        <defs>
+          <clipPath id="ticket-shape" clipPathUnits="objectBoundingBox">
+            <path
+              d="
+                M 0 0
+                L 0 0.22
+                L 0.02 0.25
+                A 0.05 0.05 0 0 1 0.03 0.28
+                L 0.03 0.72
+                A 0.05 0.05 0 0 1 0.02 0.75
+                L 0 0.78 
+                L 0 1
+        
+                L 0.35 1
+                L 0.37 0.98
+                A 0.03 0.03 0 0 1 0.4 0.97
+                L 0.6 0.97
+                A 0.03 0.03 0 0 1 0.63 0.98
+                L 0.65 1
+                L 1 1
+        
+                L 1 0.78
+                L 0.98 0.75
+                A 0.05 0.05 0 0 1 0.97 0.72
+                L 0.97 0.28
+                A 0.05 0.05 0 0 1 0.98 0.25
+                L 1 0.22
+                L 1 0
+        
+                L 0.65 0
+                L 0.63 0.02
+                A 0.03 0.03 0 0 1 0.6 0.03
+                L 0.4 0.03
+                A 0.03 0.03 0 0 1 0.37 0.02
+                L 0.35 0
+                Z"
+            />
+          </clipPath>
+        </defs>
+        </svg>
+
+        <div 
+            class="ticket-shape w-full px-12 md:px-32 py-20 sm:rounded-xl space-y-10 bg-cover bg-center bg-no-repeat ticket-shape"
+            style={{
+                backgroundImage: `url(${backgroundImageUrl})`
+            }}
+        >
+       
+        {logoUrl && (
+            <Image src={logoUrl} alt={logo?.alternativeText ?? "Logo"} width="1920" height="1080" class="w-sm h-auto mx-auto" />
+        )}
+
+        <div class="mt-4 prose prose-strong:font-bold max-w-none text-white text-center" set:html={parsedContent} />
+
+        <div class="sm:max-w-screen-sm sm:mx-auto grid sm:grid-cols-2 gap-6 items-start mt-10">
+            {cards.map((card) => (
+              <Card
+                title={card.title}
+                subtitle={card.subtitle}
+                description={card.description}
+                icon={card.icon}
+                backgroundImage={card.backgroundImage}
+                className="p-0 flex flex-col justify-center items-center"
+                titleLevel={5}
+              />
+            ))}
+        </div>
+    </div>
+</section> 
