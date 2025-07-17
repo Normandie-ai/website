@@ -2,11 +2,15 @@
 import AvegaTitle from "@components/shared/AvegaTitle.astro";
 import Button from "@components/shared/Button.astro";
 import { getImageUrl } from "@lib/imageUtils";
-import { marked } from "marked";
-
 import { Image } from "astro:assets";
 import NotchArrow from "@components/shared/NotchArrow.astro";
+import { configureMarkdown, parseMarkdown } from "@lib/markdown";
 
+interface LinkItem {
+	title: string;
+	url: string;
+	target?: "_blank" | "_self" | "_parent" | "_top";
+}
 interface Props {
     zIndex: number;
     title: string;
@@ -15,35 +19,26 @@ interface Props {
         url: string;
         alternativeText: string;
     };
-    button: {
-        title: string;
-        url: string;
-        target: "_blank" | "_self" | "_parent" | "_top";
-    };
+    buttons: LinkItem[];
     hasNotch: boolean;
     previousBlockHasNotch: boolean;
 }
 
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { zIndex, title, description, backgroundImage, button, hasNotch, previousBlockHasNotch } = Astro.props;
+const { zIndex, title, description, backgroundImage, buttons, hasNotch, previousBlockHasNotch } = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage.url, strapiUrl);
+
 // Configure marked to properly handle markdown
-marked.setOptions({
-    breaks: true,
-    gfm: true, // GitHub Flavored Markdown
-});
-
-const parsedContent = description ? marked.parse(description) : null;
-
-const sectionId = `hero-${zIndex}`;
+configureMarkdown();
+const parsedContent = parseMarkdown(description);
 ---
 
 <section class=`overflow-hidden relative h-screen ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` style={{
    zIndex: zIndex
 }}>
-   <div data-section-id={sectionId} class={`h-full overflow-hidden relative flex flex-col items-center justify-center`} data-notch-border-color={hasNotch ? '#6336E4' : undefined}>
+   <div class={`h-full overflow-hidden relative flex flex-col items-center justify-center`} data-notch-border-color={hasNotch ? '#6336E4' : undefined}>
       {imageUrl && (
          <Image src={imageUrl}
             alt=""
@@ -58,16 +53,16 @@ const sectionId = `hero-${zIndex}`;
          <div class="text-white text-start mt-2 md:mt-6 text-md md:text-md max-w-3xl relative z-10">
             <article set:html={parsedContent} />
          </div>
-         {button && (
-            <div class="mt-18">
+         <div class="mt-18 flex gap-4">
+            {buttons.map((button) => (
                <Button 
                   variant="shadow"
                   text={button.title}
-                  target={button.target}
+                  target={button.target || "_self"}
                   url={button.url}
                />
-            </div>
-         )}
+            ))}
+         </div>
       </div>
 
       {hasNotch && (

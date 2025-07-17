@@ -17,16 +17,11 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
-    "button": {
+    "buttons": {
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "components.link"
     },
     "hasNotch": {
