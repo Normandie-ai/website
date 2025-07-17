@@ -11,12 +11,15 @@ interface NavbarItem {
 }
 
 interface Navigation {
-	Logo?: {
+	logoWhite?: {
 		url: string;
 		alternativeText: string;
 	};
-	Right_Navbar_Items?: NavbarItem[];
-	Left_Navbar_Items?: NavbarItem[];
+	logoColor?: {
+		url: string;
+		alternativeText: string;
+	};
+	navbarItems?: NavbarItem[];
 }
 const strapiUrl = import.meta.env.STRAPI_URL;
 const baseUrl = import.meta.env.BASE_URL;
@@ -33,57 +36,64 @@ try {
 }
 
 // Destructure with fallback values
-const Logo = navigationData?.Logo || null;
-const Right_Navbar_Items = navigationData?.Right_Navbar_Items || [];
-const Left_Navbar_Items = navigationData?.Left_Navbar_Items || [];
+const logoWhite = navigationData?.logoWhite || null;
+const logoColor = navigationData?.logoColor || null;
+const navbarItems = navigationData?.navbarItems || [];
 
-const imageUrl = getImageUrl(Logo?.url, strapiUrl);
+const logoWhiteUrl = getImageUrl(logoWhite?.url, strapiUrl);
+const logoColorUrl = getImageUrl(logoColor?.url, strapiUrl);
 
 
 ---
 
-<header class="fixed text-slate-100 body-font z-20 w-full">
-   <div class="max-w-screen-xl mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center px-8 py-12">
-     <a href={baseUrl} class="flex title-font font-medium items-center mb-4 md:mb-0">
-      {Logo && imageUrl ? (
-        <Image src={imageUrl}
-            alt={Logo.alternativeText || "Logo"}
+<header class="absolute md:fixed text-slate-100 body-font z-20 w-full">
+   <div class="max-w-screen-xl mx-auto flex flex-wrap p-5 flex-row items-center justify-between px-8 py-12">
+     <a href={baseUrl} class="relative flex title-font font-medium items-center h-[102px] w-[204px]">
+      {logoWhiteUrl && (
+        <Image src={logoWhiteUrl}
+            id="logo-white"
+            alt={logoWhite?.alternativeText || "Logo"}
             width="204"
             height="102"
             loading="eager"
+            class="h-full w-full object-contain absolute top-0 left-0"
         />
-      ) : (
+      )} 
+
+      {logoColorUrl && (
+        <Image src={logoColorUrl}
+            id="logo-color"
+            alt={logoColor?.alternativeText || "Logo"}
+            width="204"
+            height="102"
+            loading="eager"
+            aria-hidden="true"
+            class="h-full w-full object-contain absolute top-0 left-0 opacity-0 pointer-events-none"
+        />
+      )}
+
+      {!(logoWhiteUrl && logoColorUrl) && (
         <div class="w-[204px] h-[102px] bg-white/10 rounded flex items-center justify-center">
           <span class="text-white text-lg font-semibold">Logo</span>
         </div>
       )}
      </a>
-     <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 flex flex-wrap items-center text-sm justify-center">
-        {Right_Navbar_Items?.map((item: NavbarItem) => {
-          const href = getLinkUrl(item.url, baseUrl);
-          return (<a
-            href={href}
-            class="mr-5"
-            target={item.target ? item.target : '_self'}
-          >
-            {item.title}
-          </a>)
-        })}
-     </nav>
-     <div class="flex space-x-2 items-center">
-      {Left_Navbar_Items?.map((item: NavbarItem) => {
+
+     <nav class="hidden ml-auto md:flex gap-8 items-center">
+      {navbarItems?.map((item: NavbarItem) => {
         const href = getLinkUrl(item.url, baseUrl);
         return (
           <a
             href={href}
+            class="font-bold text-white"
             target={item.target ? item.target : '_self'}
-            class="inline-flex items-center bg-violet-300 text-slate-600 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+          >
             {item.title}
           </a>
-        );
-      })}
-      
-      <DayCounter targetDate="2025-12-11" />
-    </div>
+        )
+      })} 
+    </nav>
+
+    <DayCounter targetDate="2025-12-11" className="ml-8" />
    </div>
  </header>
