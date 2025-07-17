@@ -16,19 +16,36 @@
     "description": {
       "type": "string"
     },
-    "icon": {
-      "type": "string"
-    },
     "backgroundImage": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "files"]
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
     },
     "button": {
       "type": "component",
       "repeatable": false,
       "component": "components.link"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "iconSize": {
+      "type": "enumeration",
+      "enum": [
+        "sm",
+        "md",
+        "lg"
+      ]
     }
   }
 }
