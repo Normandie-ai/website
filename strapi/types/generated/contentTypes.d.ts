@@ -447,16 +447,16 @@ export interface ApiNavigationNavigation extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Left_Navbar_Items: Schema.Attribute.Component<'components.link', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::navigation.navigation'
     > &
       Schema.Attribute.Private;
-    Logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    logoColor: Schema.Attribute.Media<'images' | 'files'>;
+    logoWhite: Schema.Attribute.Media<'images' | 'files'>;
+    navbarItems: Schema.Attribute.Component<'components.link', true>;
     publishedAt: Schema.Attribute.DateTime;
-    Right_Navbar_Items: Schema.Attribute.Component<'components.link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

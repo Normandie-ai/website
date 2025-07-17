@@ -11,22 +11,24 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "Left_Navbar_Items": {
+    "navbarItems": {
       "type": "component",
       "repeatable": true,
       "component": "components.link"
     },
-    "Right_Navbar_Items": {
-      "type": "component",
-      "repeatable": true,
-      "component": "components.link"
-    },
-    "Logo": {
+    "logoWhite": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
-        "files",
-        "videos",
-        "audios"
+        "files"
+      ]
+    },
+    "logoColor": {
+      "allowedTypes": [
+        "images",
+        "files"
       ],
       "type": "media",
       "multiple": false
