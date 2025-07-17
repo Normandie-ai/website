@@ -20,13 +20,11 @@ const { zIndex, title, content, splineURL, ctaText, ctaLink, hasNotch, previousB
 
 // Configure marked for markdown parsing
 configureMarkdown();
-
 const parsedContent = parseMarkdown(content);
 
-const sectionId = `highlight-${zIndex}`;
 ---
-<section class={cn("relative overflow-hidden", hasNotch && 'pb-notch', previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`}>
-  <div data-section-id={sectionId} class={`relative bg-white`} data-notch-border-color={hasNotch ? '#1B1C5D' : undefined}>
+<section class={cn("relative overflow-hidden", hasNotch && 'pb-notch', previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`} data-header-color={true}>
+  <div class={`relative bg-white`} data-notch-border-color={hasNotch ? '#1B1C5D' : undefined}>
     <div class="mx-auto max-w-screen-xl px-8 sm:px-16 py-48 relative z-10 flex flex-col lg:flex-row-reverse justify-center items-center gap-32">
         <div class="max-w-lg md:max-w-none">
             {title && (

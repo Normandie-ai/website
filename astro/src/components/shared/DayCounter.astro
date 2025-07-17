@@ -1,4 +1,5 @@
 ---
+import { cn } from "@lib/cn";
 interface Props {
   targetDate: string;
   className?: string;
@@ -12,7 +13,7 @@ const timeDiff = target.getTime() - today.getTime();
 const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 ---
 
-<div class={`ml-4 px-10 py-2 bg-white/10 backdrop-blur-md rounded-lg border-1 border-white shadow-lg relative overflow-hidden ${className}`}>
+<div id="day-counter-container" class={cn("ml-4 px-10 py-2 bg-white/10 backdrop-blur-md rounded-lg border-1 border-white shadow-lg relative overflow-hidden", className)}>
   <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
     <span id="day-counter-bg" class="text-white/10 avega text-7xl font-bold select-none">
       {daysDiff}

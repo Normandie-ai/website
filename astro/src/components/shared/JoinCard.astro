@@ -14,10 +14,11 @@ const { cardImage, cardTitle, cardContent } = Astro.props as JoinCardProps;
     {cardImage && (
         <Image
             src={cardImage}
-            alt={cardTitle}
+            alt={cardTitle || ""}
             width="1920"
             height="1080"
             class="object-cover rounded-full h-24 w-auto aspect-square"
+            role="presentation"
         />
     )}
 

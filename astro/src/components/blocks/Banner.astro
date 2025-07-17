@@ -42,10 +42,8 @@ const parsedContent = parseMarkdown(content);
 
 const logoUrl = getImageUrl(logo?.url, strapiUrl);
 const backgroundImageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
-
-const sectionId = `banner-${zIndex}`;
 ---
-<section class={cn("relative overflow-hidden", previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`}>
+<section class={cn("relative overflow-hidden", previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`} data-header-color={true}>
     <div class="mx-auto max-w-screen-xl sm:px-8 sm:py-8 relative z-10">
         <svg
         xmlns="http://www.w3.org/2000/svg"
