@@ -2,7 +2,13 @@
 import AvegaTitle from "./AvegaTitle.astro";
 import { getImageUrl } from "@lib/imageUtils";
 import { cn } from "@lib/cn";
+import Button from "./Button.astro";
 
+interface LinkItem {
+	title: string;
+	url: string;
+	target?: "_blank" | "_self" | "_parent" | "_top";
+}
 interface Props {
 	title: string;
 	titleLevel?: 1 | 2 | 3 | 4 | 5 | 6;
@@ -17,11 +23,12 @@ interface Props {
 		alternativeText: string;
 	};
 	className?: string;
+	button?: LinkItem;
 }
 
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { title, subtitle, description, icon, backgroundImage, titleLevel = 4, titleColor, titleClassName, className, subtitleClassName } = Astro.props;
+const { title, subtitle, description, icon, backgroundImage, titleLevel = 4, titleColor, titleClassName, className, subtitleClassName, button} = Astro.props;
 
 const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 ---
@@ -58,6 +65,10 @@ const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 	<p class="relative mt-4 text-white/90 leading-relaxed text-center text-sm mx-auto">
 		{description}
 	</p>
+
+	{button && (
+		<Button url={button.url} target={button.target || "_blank"} text={button.title} variant="outline" className="mt-8" />
+	)}
 	
 	<div class="absolute inset-0 rounded-2xl bg-white/5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"></div>
 </div> 
