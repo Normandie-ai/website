@@ -37,7 +37,6 @@ const strapiUrl = import.meta.env.STRAPI_URL;
 
 // Configure marked for markdown parsing
 configureMarkdown();
-
 const parsedContent = parseMarkdown(content);
 
 const logoUrl = getImageUrl(logo?.url, strapiUrl);
