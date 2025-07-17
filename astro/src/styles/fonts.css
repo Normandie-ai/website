@@ -34,6 +34,11 @@ body {
     Roboto, sans-serif;
 }
 
+.maax {
+  font-family: "Maax", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
 .avega {
   em {
     -webkit-text-fill-color: transparent;
