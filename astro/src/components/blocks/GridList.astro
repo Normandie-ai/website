@@ -1,8 +1,8 @@
 ---
-import { marked } from "marked";
 import NotchArrow from "@components/shared/NotchArrow.astro";
 import AvegaTitle from "@components/shared/AvegaTitle.astro";
 import Card from "@components/shared/Card.astro";
+import { configureMarkdown, parseMarkdown } from "@lib/markdown";
 
 interface CardData {
 	title: string;
@@ -24,21 +24,14 @@ interface Props {
   previousBlockHasNotch: boolean;
 }
 
-
 const { zIndex, title, content, cards, hasNotch, previousBlockHasNotch } = Astro.props;
 
 // Configure marked to properly handle markdown
-marked.setOptions({
-  breaks: true,
-  gfm: true // GitHub Flavored Markdown
-});
-
-const parsedContent = content ? marked.parse(content) : null;
-
-const sectionId = `presentation-${zIndex}`;
+configureMarkdown();
+const parsedContent = parseMarkdown(content);
 ---
-<section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`>
-  <div data-section-id={sectionId} class={`relative bg-white`} data-notch-border-color={hasNotch ? '#7666FC' : undefined}>
+<section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` data-header-color={true}>
+  <div class={`relative bg-white`} data-notch-border-color={hasNotch ? '#7666FC' : undefined}>
     <div class="mx-auto max-w-screen-xl px-8 py-48">
       {title && (
         <AvegaTitle title={title} level={4} color="#725CFA" />

@@ -43,15 +43,13 @@ const strapiUrl = import.meta.env.STRAPI_URL;
 const { zIndex, title, description, cardImage, cardTitle, cardContent, hasNotch, previousBlockHasNotch } = Astro.props as TeamProps;
 
 configureMarkdown();
-
 const parsedContent = parseMarkdown(cardContent);
 
 const cardImageUrl = getImageUrl(cardImage?.url, strapiUrl);
 
-const sectionId = `team-${zIndex}`;
 ---
-<section class={cn("relative overflow-hidden text-gray-600 body-font", hasNotch && "pb-notch", previousBlockHasNotch && "mt-notch")} style={`z-index: ${zIndex}`}>
-  <div data-section-id={sectionId} class={`relative bg-white`} data-notch-border-color={hasNotch ? '#ff00ff' : undefined}>
+<section class={cn("relative overflow-hidden text-gray-600 body-font", hasNotch && "pb-notch", previousBlockHasNotch && "mt-notch")} style={`z-index: ${zIndex}`} data-header-color={true}>
+  <div class={`relative bg-white`} data-notch-border-color={hasNotch ? '#ff00ff' : undefined}>
     <div class="max-w-screen-xl mx-auto px-8 py-24">
       <div class="mb-20">
         <AvegaTitle title={title} color="#725CFA" level={4} />

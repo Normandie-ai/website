@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import { marked } from "marked";
 import { getImageUrl } from "@lib/imageUtils";
 import NotchArrow from "@components/shared/NotchArrow.astro";
+import { configureMarkdown, parseMarkdown } from "@lib/markdown";
 
 interface Props {
   zIndex: number;
@@ -27,12 +27,8 @@ const { zIndex, title, titleImage, content, images = [], variant, hasNotch, prev
 const imageUrl = getImageUrl(titleImage?.url, strapiUrl);
 
 // Configure marked to properly handle markdown
-marked.setOptions({
-  breaks: true,
-  gfm: true // GitHub Flavored Markdown
-});
-
-const parsedContent = content ? marked.parse(content) : null;
+configureMarkdown();
+const parsedContent =  parseMarkdown(content);
 
 // Determine grid layout based on number of images
 const imageCount = images?.length || 0;
@@ -61,8 +57,6 @@ const containerClass = hasImages
 const variantColor = variant === "dark" ? "#191958" : "#ffffff";
 const sectionStyle = `background-color: ${variantColor}`;
 const arrowColor = variant === "dark" ? "#ffffff" : "#CF65FB";
-
-const sectionId = `features-${zIndex}`;
 ---
 
 <style>
@@ -72,9 +66,8 @@ const sectionId = `features-${zIndex}`;
   }
 </style>
 
-
-<section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`>
-  <div data-section-id={sectionId} class={`relative mx-auto`} style={sectionStyle} data-notch-border-color={hasNotch ? variantColor : undefined}>
+<section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` data-header-color={variant !== "dark"}>
+  <div class={`relative mx-auto`} style={sectionStyle} data-notch-border-color={hasNotch ? variantColor : undefined}>
     <!-- Decorative blurred circles - only show for dark variant -->
     {variant === "dark" && (
       <>
