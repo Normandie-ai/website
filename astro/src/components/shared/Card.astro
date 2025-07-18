@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import AvegaTitle from "./AvegaTitle.astro";
 import { getImageUrl } from "@lib/imageUtils";
 import { cn } from "@lib/cn";
@@ -17,7 +18,12 @@ interface Props {
 	subtitle?: string;
 	subtitleClassName?: string;
 	description: string;
-	icon?: string;
+	icon?: {
+		url: string;
+		alternativeText: string;
+	};
+	iconSize?: "sm" | "md" | "lg";
+	iconClassName?: string;
 	backgroundImage?: {
 		url: string;
 		alternativeText: string;
@@ -28,8 +34,9 @@ interface Props {
 
 const strapiUrl = import.meta.env.STRAPI_URL;
 
-const { title, subtitle, description, icon, backgroundImage, titleLevel = 4, titleColor, titleClassName, className, subtitleClassName, button} = Astro.props;
+const { title, subtitle, description, icon, iconSize, iconClassName, backgroundImage, titleLevel = 4, titleColor, titleClassName, className, subtitleClassName, button} = Astro.props;
 
+const iconUrl = getImageUrl(icon?.url, strapiUrl);
 const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 ---
 
@@ -41,16 +48,15 @@ const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 		backgroundPosition: 'center',
 	}}
 >
-	{icon && (
-		<div class="relative mb-6 flex justify-center">
-			<svg class="h-14 aspect-square text-white/50" fill="currentColor" viewBox="0 0 24 24">
-				{icon === "location" && (
-					<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM12 11.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-				)}
-				{icon === "calendar" && (
-					<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-				)}
-			</svg>
+	{iconUrl && (
+		<div class="relative flex justify-center">
+			<Image 
+				src={iconUrl} 
+				alt={icon?.alternativeText ?? ""} 
+				width={iconSize === "sm" ? 52 : iconSize === "md" ? 64 : 112} 
+				height={iconSize === "sm" ? 52 : iconSize === "md" ? 64 : 112} 
+				class={cn("size-13", iconSize === "sm" && "size-13", iconSize === "md" && "size-16", iconSize === "lg" && "size-20", iconClassName)}
+			/>
 		</div>
 	)}
 	
@@ -61,10 +67,12 @@ const imageUrl = getImageUrl(backgroundImage?.url, strapiUrl);
 			{subtitle}
 		</p>
 	)}
-	
-	<p class="relative mt-4 text-white/90 leading-relaxed text-center text-sm mx-auto">
-		{description}
-	</p>
+
+	{description && (
+		<p class="relative mt-4 text-white/90 leading-relaxed text-center text-sm mx-auto">
+			{description}
+		</p>
+	)}
 
 	{button && (
 		<Button url={button.url} target={button.target || "_blank"} text={button.title} variant="outline" className="mt-8" />

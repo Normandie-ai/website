@@ -2,21 +2,31 @@
 import Button from "@components/shared/Button.astro";
 import NotchArrow from "@components/shared/NotchArrow.astro";
 import AvegaTitle from "../shared/AvegaTitle.astro";
-import StatCard from "../shared/StatCard.astro";
 import Linkedin from "@components/shared/icons/linkedin.astro";
 import { configureMarkdown, parseMarkdown } from "@lib/markdown";
+import Card from "../shared/Card.astro";
+import { cn } from "@lib/cn";
 
-interface StatCardData {
-    icon: string;
-    title: string;
-    subtitle?: string;
+interface CardData {
+	title: string;
+	subtitle?: string;
+	description: string;
+	icon?: {
+		url: string;
+		alternativeText: string;
+	};
+	iconSize?: "sm" | "md" | "lg";
+	backgroundImage?: {
+		url: string;
+		alternativeText: string;
+	};
 }
 
 interface Props {
     zIndex: number;
     title: string;
     content: string;
-    stats: StatCardData[];
+    stats: CardData[];
     ctaText?: string;
     ctaLink?: string;
     variant?: "default" | "dark";
@@ -66,19 +76,17 @@ const gridLayouts = {
 };
 
 const currentLayout = gridLayouts[statsCount as keyof typeof gridLayouts] || gridLayouts.default;
-
-const sectionId = `stats-${zIndex}`;
 ---
 <section class={`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}`} style={{
   zIndex: zIndex
 }}>
-  <div data-section-id={sectionId} class={`relative`} style={sectionStyle} data-notch-border-color={hasNotch ? '#1B1C5D' : undefined}>
+  <div class={`relative`} style={sectionStyle} data-notch-border-color={hasNotch ? '#1B1C5D' : undefined}>
     <!-- Decorative blurred circles for dark variant -->
     {variant === "dark" && (
       <div class="absolute top-0 left-24 w-[32rem] h-[32rem] rounded-full filter blur-3xl blur-circle"></div>
     )}
     
-    <div class="mx-auto max-w-screen-xl px-8 py-24 relative z-10">
+    <div class="mx-auto max-w-screen-xl px-8 py-48 relative z-10">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <!-- Statistics Cards Section -->
         <div class="order-1 lg:order-1">
@@ -87,14 +95,17 @@ const sectionId = `stats-${zIndex}`;
               const colSpan = currentLayout.pattern.length > 0 
                 ? currentLayout.pattern[index] 
                 : 1;
-              
+
               return (
-                <StatCard 
+                <Card 
                   icon={stat.icon}
                   title={stat.title}
                   subtitle={stat.subtitle}
-                  colSpan={colSpan}
-                  variant={variant}
+                  description={stat.description}
+                  iconSize={stat.iconSize}
+                  backgroundImage={stat.backgroundImage}
+                  className={cn("p-6 bg-white/10 hover:bg-white/20 transition-all duration-300","col-span-1", colSpan === 2 && "col-span-2", colSpan === 3 && "col-span-3")}
+                  titleClassName="!text-xl !text-shadow-none maax font-bold mt-3"
                 />
               );
             })}

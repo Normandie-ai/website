@@ -9,7 +9,11 @@ interface CardData {
 	title: string;
 	subtitle?: string;
 	description: string;
-	icon?: string;
+	icon?: {
+		url: string;
+		alternativeText: string;
+    };
+    iconSize?: "sm" | "md" | "lg";
 	backgroundImage?: {
 		url: string;
 		alternativeText: string;
