@@ -15,7 +15,11 @@ interface CardData {
 	title: string;
 	subtitle?: string;
 	description: string;
-	icon?: string;
+	icon?: {
+		url: string;
+		alternativeText: string;
+	};
+	iconSize?: "sm" | "md" | "lg";
 	backgroundImage?: {
 		url: string;
 		alternativeText: string;
@@ -78,9 +82,10 @@ const containerClass = hasMultipleCards
 					subtitle={card.subtitle}
 					description={card.description}
 					icon={card.icon}
+					iconSize={card.iconSize}
 					backgroundImage={card.backgroundImage}
 					button={card.button}
-			/>
+				/>
 			))}
 		</div>
 

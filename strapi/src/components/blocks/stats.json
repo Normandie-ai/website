@@ -15,10 +15,6 @@
       "type": "richtext",
       "required": true
     },
-    "stats": {
-      "type": "json",
-      "required": true
-    },
     "ctaText": {
       "type": "string",
       "required": false
@@ -38,6 +34,11 @@
     "hasNotch": {
       "type": "boolean",
       "default": false
+    },
+    "stats": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.card"
     }
   }
 }

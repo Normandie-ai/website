@@ -10,7 +10,11 @@ interface CardData {
 	title: string;
 	subtitle?: string;
 	description: string;
-	icon?: string;
+	icon?: {
+		url: string;
+		alternativeText: string;
+	};
+  iconSize?: "sm" | "md" | "lg";
 	backgroundImage?: {
 		url: string;
 		alternativeText: string;
@@ -34,7 +38,7 @@ configureMarkdown();
 const parsedContent = parseMarkdown(content);
 ---
 <section class={cn("relative overflow-hidden", hasNotch && 'pb-notch', previousBlockHasNotch && 'mt-notch')} style={`z-index: ${zIndex}`}>
-  <div class={`relative bg-[#191958]`} data-notch-border-color={hasNotch ? '#ffffff' : undefined}>
+  <div class={`relative bg-[#191958]`} data-notch-border-color={hasNotch ? '#1B1C5D' : undefined}>
     <div class="absolute top-0 left-24 w-[32rem] h-[32rem] rounded-full filter blur-3xl blur-circle"></div>
 
     <div class="relative mx-auto max-w-screen-xl px-8 py-48">

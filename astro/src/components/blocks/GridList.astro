@@ -8,7 +8,11 @@ interface CardData {
 	title: string;
 	subtitle?: string;
 	description: string;
-	icon?: string;
+	icon?: {
+		url: string;
+		alternativeText: string;
+	};
+	iconSize?: "sm" | "md" | "lg";
 	backgroundImage?: {
 		url: string;
 		alternativeText: string;
@@ -31,7 +35,7 @@ configureMarkdown();
 const parsedContent = parseMarkdown(content);
 ---
 <section style={`z-index: ${zIndex}`} class=`relative overflow-hidden ${hasNotch ? 'pb-notch' : ''} ${previousBlockHasNotch ? 'mt-notch' : ''}` data-header-color={true}>
-  <div class={`relative bg-white`} data-notch-border-color={hasNotch ? '#7666FC' : undefined}>
+  <div class={`relative bg-white`} data-notch-border-color={hasNotch ? '#ffffff' : undefined}>
     <div class="mx-auto max-w-screen-xl px-8 py-48">
       {title && (
         <AvegaTitle title={title} level={4} color="#725CFA" />
@@ -48,6 +52,8 @@ const parsedContent = parseMarkdown(content);
             subtitle={card.subtitle}
             description={card.description}
             icon={card.icon}
+            iconSize={card.iconSize}
+            iconClassName={"size-16"}
             backgroundImage={card.backgroundImage}
           />
         ))}
